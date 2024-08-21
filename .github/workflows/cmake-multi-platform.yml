@@ -46,6 +46,7 @@ jobs:
     - name: Install Cross-Compilation Tools for ARM64
       if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
       run: |
+        sudo dpkg --add-architecture arm64
         sudo apt-get update
         sudo apt-get install -y libasound2-dev:arm64 libx11-dev:arm64 libxrandr-dev:arm64 libxi-dev:arm64 libgl1-mesa-dev:arm64 libglu1-mesa-dev:arm64 libxcursor-dev:arm64 libxinerama-dev:arm64 libwayland-dev:arm64 libxkbcommon-dev:arm64
         sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
