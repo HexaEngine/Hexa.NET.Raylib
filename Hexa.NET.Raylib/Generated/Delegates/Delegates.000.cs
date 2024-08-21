@@ -19,7 +19,7 @@ namespace Hexa.NET.Raylib
 	#if NET5_0_OR_GREATER
 	/// <summary>
 	/// Callbacks to hook some internal functions<br/>
-	/// WARNING: These callbacks are intended for advanced users<br/>
+	/// WARNING: These callbacks are intended for advance users<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Delegate, "TraceLogCallback")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -28,7 +28,7 @@ namespace Hexa.NET.Raylib
 	#else
 	/// <summary>
 	/// Callbacks to hook some internal functions<br/>
-	/// WARNING: These callbacks are intended for advanced users<br/>
+	/// WARNING: These callbacks are intended for advance users<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Delegate, "TraceLogCallback")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]

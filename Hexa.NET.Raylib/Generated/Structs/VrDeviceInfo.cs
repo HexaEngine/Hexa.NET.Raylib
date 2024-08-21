@@ -52,6 +52,13 @@ namespace Hexa.NET.Raylib
 		public float VScreenSize;
 
 		/// <summary>
+		/// Screen center in meters<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "vScreenCenter")]
+		[NativeName(NativeNameType.Type, "float")]
+		public float VScreenCenter;
+
+		/// <summary>
 		/// Distance between eye and display in meters<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "eyeToScreenDistance")]
@@ -93,12 +100,13 @@ namespace Hexa.NET.Raylib
 		public float ChromaAbCorrection_3;
 
 
-		public unsafe VrDeviceInfo(int hResolution = default, int vResolution = default, float hScreenSize = default, float vScreenSize = default, float eyeToScreenDistance = default, float lensSeparationDistance = default, float interpupillaryDistance = default, float* lensDistortionValues = default, float* chromaAbCorrection = default)
+		public unsafe VrDeviceInfo(int hResolution = default, int vResolution = default, float hScreenSize = default, float vScreenSize = default, float vScreenCenter = default, float eyeToScreenDistance = default, float lensSeparationDistance = default, float interpupillaryDistance = default, float* lensDistortionValues = default, float* chromaAbCorrection = default)
 		{
 			HResolution = hResolution;
 			VResolution = vResolution;
 			HScreenSize = hScreenSize;
 			VScreenSize = vScreenSize;
+			VScreenCenter = vScreenCenter;
 			EyeToScreenDistance = eyeToScreenDistance;
 			LensSeparationDistance = lensSeparationDistance;
 			InterpupillaryDistance = interpupillaryDistance;
@@ -118,12 +126,13 @@ namespace Hexa.NET.Raylib
 			}
 		}
 
-		public unsafe VrDeviceInfo(int hResolution = default, int vResolution = default, float hScreenSize = default, float vScreenSize = default, float eyeToScreenDistance = default, float lensSeparationDistance = default, float interpupillaryDistance = default, Span<float> lensDistortionValues = default, Span<float> chromaAbCorrection = default)
+		public unsafe VrDeviceInfo(int hResolution = default, int vResolution = default, float hScreenSize = default, float vScreenSize = default, float vScreenCenter = default, float eyeToScreenDistance = default, float lensSeparationDistance = default, float interpupillaryDistance = default, Span<float> lensDistortionValues = default, Span<float> chromaAbCorrection = default)
 		{
 			HResolution = hResolution;
 			VResolution = vResolution;
 			HScreenSize = hScreenSize;
 			VScreenSize = vScreenSize;
+			VScreenCenter = vScreenCenter;
 			EyeToScreenDistance = eyeToScreenDistance;
 			LensSeparationDistance = lensSeparationDistance;
 			InterpupillaryDistance = interpupillaryDistance;

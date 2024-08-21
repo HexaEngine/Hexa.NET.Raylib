@@ -31,7 +31,7 @@ namespace Hexa.NET.Raylib
 		public Vector3 Position;
 
 		/// <summary>
-		/// Ray direction (normalized)<br/>
+		/// Ray direction<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "direction")]
 		[NativeName(NativeNameType.Type, "Vector3")]

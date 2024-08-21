@@ -63,7 +63,7 @@ namespace Hexa.NET.Raylib
 		RightFaceUp = unchecked(5),
 
 		/// <summary>
-		/// Gamepad right button right (i.e. PS3: Circle, Xbox: B)<br/>
+		/// Gamepad right button right (i.e. PS3: Square, Xbox: X)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "GAMEPAD_BUTTON_RIGHT_FACE_RIGHT")]
 		[NativeName(NativeNameType.Value, "6")]
@@ -77,7 +77,7 @@ namespace Hexa.NET.Raylib
 		RightFaceDown = unchecked(7),
 
 		/// <summary>
-		/// Gamepad right button left (i.e. PS3: Square, Xbox: X)<br/>
+		/// Gamepad right button left (i.e. PS3: Circle, Xbox: B)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "GAMEPAD_BUTTON_RIGHT_FACE_LEFT")]
 		[NativeName(NativeNameType.Value, "8")]
@@ -98,7 +98,7 @@ namespace Hexa.NET.Raylib
 		LeftTrigger2 = unchecked(10),
 
 		/// <summary>
-		/// Gamepad top/back trigger right (first), it could be a trailing button<br/>
+		/// Gamepad top/back trigger right (one), it could be a trailing button<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "GAMEPAD_BUTTON_RIGHT_TRIGGER_1")]
 		[NativeName(NativeNameType.Value, "11")]

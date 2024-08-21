@@ -777,8 +777,8 @@ namespace Hexa.NET.Raylib
 		/// Key: Android menu button<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "KEY_MENU")]
-		[NativeName(NativeNameType.Value, "5")]
-		Menu = unchecked(5),
+		[NativeName(NativeNameType.Value, "82")]
+		Menu = unchecked(82),
 
 		/// <summary>
 		/// Key: Android volume up button<br/>
