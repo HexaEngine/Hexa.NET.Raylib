@@ -1,0 +1,26 @@
+{
+  "Namespace": "Hexa.NET.Raylib",
+  "ApiName": "Raylib",
+  "LibName": "Raylib",
+  "EnableExperimentalOptions": true,
+  "GenerateConstructorsForStructs": true,
+  "GenerateSizeOfStructs": false,
+  "GeneratePlaceholderComments": false,
+  "GenerateMetadata": true,
+  "ImportType": "VTable",
+  "ConstantNamingConvention": "Unknown",
+  "TypeMappings": {
+    "ssize_t": "nint",
+    "time_t": "long",
+    "Camera": "Camera3D",
+    "Texture2D": "Texture",
+    "RenderTexture2D": "RenderTexture",
+    "TextureCubemap": "Texture",
+    "va_list": "nint",
+    "Matrix": "Matrix4x4",
+    "Float3": "Vector3"
+  },
+  "IgnoredTypes": [ "Vector2", "Vector3", "Vector4", "Matrix", "float3" ],
+  "IgnoredFunctions": [ "TextSplit" ],
+  "Usings": [ "System.Numerics" ]
+}
