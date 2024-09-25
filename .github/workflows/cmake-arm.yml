@@ -1,4 +1,4 @@
-name: Build raylib Libraries
+name: Build raylib Libraries (ARM)
 
 on: [workflow_dispatch]
 
