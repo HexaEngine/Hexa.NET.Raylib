@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: self-hosted
+          - os: ubuntu
             arch: arm64
 #          - os: windows-latest
 #            arch: arm64
