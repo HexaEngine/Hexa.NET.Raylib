@@ -10,10 +10,10 @@ jobs:
         include:
           - os: self-hosted
             arch: arm64
-          - os: windows-latest
-            arch: arm64
-            triplet: arm64-windows
-            arch-cmake: arm64
+#          - os: windows-latest
+#            arch: arm64
+#            triplet: arm64-windows
+#            arch-cmake: arm64
       
     steps:
     - uses: actions/checkout@v4.1.7
