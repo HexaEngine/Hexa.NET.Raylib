@@ -1,0 +1,75 @@
+name: Build raylib Libraries
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            arch: arm64
+          - os: windows-latest
+            arch: arm64
+            triplet: arm64-windows
+            arch-cmake: arm64
+      
+    steps:
+    - uses: actions/checkout@v4.1.7
+      with:
+        repository: 'raysan5/raylib'
+        path: 'raylib'
+        ref: '5.0'
+        submodules: true
+
+    - name: Install Dependencies on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev
+
+    - name: Install Cross-Compilation Tools for ARM64
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
+      run: |
+        sudo dpkg --add-architecture arm64
+        sudo apt-get update
+        sudo apt-get install -y libasound2-dev:arm64 libx11-dev:arm64 libxrandr-dev:arm64 libxi-dev:arm64 libgl1-mesa-dev:arm64 libglu1-mesa-dev:arm64 libxcursor-dev:arm64 libxinerama-dev:arm64 libwayland-dev:arm64 libxkbcommon-dev:arm64
+        sudo apt-get install -y gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+
+    - name: Configure Raylib with CMake for ARM64 on Linux
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'arm64'
+      run: |
+        cd raylib
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_C_COMPILER=aarch64-linux-gnu-gcc -DCMAKE_CXX_COMPILER=aarch64-linux-gnu-g++ -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+
+    - name: Configure Raylib with CMake on Windows
+      if: matrix.os == 'windows-latest'
+      run: |
+        cd raylib
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+
+    - name: Configure Raylib with CMake on macOS
+      if: matrix.os == 'macos-latest'
+      run: |
+        cd raylib
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DCMAKE_OSX_ARCHITECTURES=${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+
+    - name: Configure Raylib with CMake on Linux (x86_64)
+      if: matrix.os == 'ubuntu-latest' && matrix.arch == 'x86_64'
+      run: |
+        cd raylib
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+
+    - name: Build raylib
+      run: cmake --build raylib/build --config Release
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: ${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+        path: |
+          raylib/build/raylib/Release/*.dll
+          raylib/build/raylib/*.so
+          raylib/build/raylib/*.dylib
+        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
