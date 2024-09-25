@@ -19,20 +19,19 @@ jobs:
         repository: 'raysan5/raylib'
         path: 'raylib'
         ref: '5.0'
-        submodules: true
+        submodules: true       
 
-    - name: Install dependencies on Windows
+    # Install Visual Studio Build Tools and Windows SDK
+    - name: Install Visual Studio Build Tools and Windows SDK
       if: matrix.os == 'windows-latest'
       run: |
-         cd raylib
-         git clone https://github.com/microsoft/vcpkg.git
-         .\vcpkg\bootstrap-vcpkg.bat
-         .\vcpkg\vcpkg.exe install opengl:${{ matrix.triplet }}
+        choco install visualstudio2019buildtools --include-optional --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --quiet --wait"
+        choco install windows-sdk-10.0 --version 10.0.22621.755
 
     - name: Configure Raylib with CMake on Windows
       run: |
         cd raylib
-        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
 
     - name: Build raylib
       run: cmake --build raylib/build --config Release
