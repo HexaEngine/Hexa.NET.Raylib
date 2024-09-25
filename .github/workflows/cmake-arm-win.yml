@@ -21,10 +21,18 @@ jobs:
         ref: '5.0'
         submodules: true
 
+    - name: Install dependencies on Windows
+      if: matrix.os == 'windows-latest'
+      run: |
+         cd raylib
+         git clone https://github.com/microsoft/vcpkg.git
+         .\vcpkg\bootstrap-vcpkg.bat
+         .\vcpkg\vcpkg.exe install opengl:${{ matrix.triplet }}
+
     - name: Configure Raylib with CMake on Windows
       run: |
         cd raylib
-        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF -DCMAKE_TOOLCHAIN_FILE="./vcpkg/scripts/buildsystems/vcpkg.cmake"
 
     - name: Build raylib
       run: cmake --build raylib/build --config Release
