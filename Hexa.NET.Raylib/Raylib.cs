@@ -1,5 +1,7 @@
 ﻿namespace Hexa.NET.Raylib
 {
+    using System.Runtime.InteropServices;
+
     public partial class Raylib
     {
         static Raylib()
@@ -33,5 +35,14 @@
         public static readonly Color Blank = new Color(0, 0, 0, 0); // Transparent
         public static readonly Color Magenta = new Color(255, 0, 255, 255);
         public static readonly Color RayWhite = new Color(245, 245, 245, 255);
+
+        internal static string GetLibraryName()
+        {
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                return "raylib";
+            }
+            return "libraylib";
+        }
     }
 }

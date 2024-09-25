@@ -21,7 +21,7 @@ namespace Hexa.NET.Raylib
 
 		public static void InitApi()
 		{
-			vt = new VTable(LibraryLoader.LoadLibrary(), 713);
+			vt = new VTable(LibraryLoader.LoadLibrary(GetLibraryName, null), 713);
 			vt.Load(0, "InitWindow");
 			vt.Load(1, "CloseWindow");
 			vt.Load(2, "WindowShouldClose");
