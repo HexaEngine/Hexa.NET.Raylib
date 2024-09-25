@@ -1,0 +1,40 @@
+name: Build raylib Libraries (ARM)
+
+on: [workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            arch: arm64
+            triplet: arm64-windows
+            arch-cmake: arm64
+      
+    steps:
+    - uses: actions/checkout@v4.1.7
+      with:
+        repository: 'raysan5/raylib'
+        path: 'raylib'
+        ref: '5.0'
+        submodules: true
+
+    - name: Configure Raylib with CMake on Windows
+      run: |
+        cd raylib
+        cmake -S ./ -B ./build -DCMAKE_BUILD_TYPE=Release -A ${{ matrix.arch-cmake }} -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF
+
+    - name: Build raylib
+      run: cmake --build raylib/build --config Release
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v4.3.4
+      with:
+        name: ${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+        path: |
+          raylib/build/raylib/Release/*.dll
+          raylib/build/raylib/*.so
+          raylib/build/raylib/*.dylib
+        if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
