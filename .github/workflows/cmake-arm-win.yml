@@ -26,7 +26,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       run: |
         choco install visualstudio2019buildtools --include-optional --package-parameters "--add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --quiet --wait"
-        choco install windows-sdk-10.0 --version 10.0.22621.755
+        choco install windows-sdk-10.0 --version 10.0.26624
 
     - name: Configure Raylib with CMake on Windows
       run: |
