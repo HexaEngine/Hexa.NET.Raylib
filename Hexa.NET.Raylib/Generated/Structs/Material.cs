@@ -34,7 +34,7 @@ namespace Hexa.NET.Raylib
 		/// Material maps array (MAX_MATERIAL_MAPS)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "maps")]
-		[NativeName(NativeNameType.Type, "MaterialMap*")]
+		[NativeName(NativeNameType.Type, "MaterialMap *")]
 		public unsafe MaterialMap* Maps;
 
 		/// <summary>

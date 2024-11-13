@@ -27,14 +27,14 @@ namespace Hexa.NET.Raylib
 		/// Pointer to internal data used by the audio system<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "buffer")]
-		[NativeName(NativeNameType.Type, "rAudioBuffer*")]
+		[NativeName(NativeNameType.Type, "rAudioBuffer *")]
 		public unsafe RAudioBuffer* Buffer;
 
 		/// <summary>
 		/// Pointer to internal data processor, useful for audio effects<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "processor")]
-		[NativeName(NativeNameType.Type, "rAudioProcessor*")]
+		[NativeName(NativeNameType.Type, "rAudioProcessor *")]
 		public unsafe RAudioProcessor* Processor;
 
 		/// <summary>

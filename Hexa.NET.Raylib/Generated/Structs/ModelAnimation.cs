@@ -41,14 +41,14 @@ namespace Hexa.NET.Raylib
 		/// Bones information (skeleton)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "bones")]
-		[NativeName(NativeNameType.Type, "BoneInfo*")]
+		[NativeName(NativeNameType.Type, "BoneInfo *")]
 		public unsafe BoneInfo* Bones;
 
 		/// <summary>
 		/// Poses array by frame<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "framePoses")]
-		[NativeName(NativeNameType.Type, "Transform**")]
+		[NativeName(NativeNameType.Type, "Transform * *")]
 		public unsafe Transform** FramePoses;
 
 		/// <summary>

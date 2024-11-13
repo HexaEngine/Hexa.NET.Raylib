@@ -41,7 +41,7 @@ namespace Hexa.NET.Raylib
 		/// Events entries<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "events")]
-		[NativeName(NativeNameType.Type, "AutomationEvent*")]
+		[NativeName(NativeNameType.Type, "AutomationEvent *")]
 		public unsafe AutomationEvent* Events;
 
 

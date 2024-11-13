@@ -1,7 +1,8 @@
 ﻿using HexaGen;
 using HexaGen.Patching;
 
-CsCodeGeneratorConfig config = CsCodeGeneratorConfig.Load("generator.json");
-CsCodeGenerator generator = new(config);
-generator.PatchEngine.RegisterPrePatch(new NamingPatch(["Raylib"], NamingPatchOptions.None));
-generator.Generate([.. Directory.GetFiles("include")], "../../../../Hexa.NET.Raylib/Generated");
+BatchGenerator batch = new();
+batch.Start()
+    .Setup<CsCodeGenerator>("generator.json")
+    .AddPrePatch(new NamingPatch(["Raylib"], NamingPatchOptions.None))
+    .Generate([.. Directory.GetFiles("include")], "../../../../Hexa.NET.Raylib/Generated");

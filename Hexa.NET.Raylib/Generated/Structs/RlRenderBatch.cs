@@ -41,14 +41,14 @@ namespace Hexa.NET.Raylib
 		/// Dynamic buffer(s) for vertex data<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "vertexBuffer")]
-		[NativeName(NativeNameType.Type, "rlVertexBuffer*")]
+		[NativeName(NativeNameType.Type, "rlVertexBuffer *")]
 		public unsafe RlVertexBuffer* VertexBuffer;
 
 		/// <summary>
 		/// Draw calls array, depends on textureId<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "draws")]
-		[NativeName(NativeNameType.Type, "rlDrawCall*")]
+		[NativeName(NativeNameType.Type, "rlDrawCall *")]
 		public unsafe RlDrawCall* Draws;
 
 		/// <summary>

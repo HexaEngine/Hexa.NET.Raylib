@@ -34,28 +34,28 @@ namespace Hexa.NET.Raylib
 		/// Vertex position (XYZ - 3 components per vertex) (shader-location = 0)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "vertices")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Vertices;
 
 		/// <summary>
 		/// Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "texcoords")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Texcoords;
 
 		/// <summary>
 		/// Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "colors")]
-		[NativeName(NativeNameType.Type, "unsigned char*")]
+		[NativeName(NativeNameType.Type, "unsigned char *")]
 		public unsafe byte* Colors;
 
 		/// <summary>
 		/// Vertex indices (in case vertex data comes indexed) (6 indices per quad)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "indices")]
-		[NativeName(NativeNameType.Type, "unsigned int*")]
+		[NativeName(NativeNameType.Type, "unsigned int *")]
 		public unsafe uint* Indices;
 
 		/// <summary>

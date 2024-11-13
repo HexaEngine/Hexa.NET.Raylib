@@ -55,14 +55,14 @@ namespace Hexa.NET.Raylib
 		/// Rectangles in texture for the glyphs<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "recs")]
-		[NativeName(NativeNameType.Type, "Rectangle*")]
+		[NativeName(NativeNameType.Type, "Rectangle *")]
 		public unsafe Rectangle* Recs;
 
 		/// <summary>
 		/// Glyphs info data<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "glyphs")]
-		[NativeName(NativeNameType.Type, "GlyphInfo*")]
+		[NativeName(NativeNameType.Type, "GlyphInfo *")]
 		public unsafe GlyphInfo* Glyphs;
 
 

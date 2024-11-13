@@ -55,7 +55,7 @@ namespace Hexa.NET.Raylib
 		/// Buffer data pointer<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "data")]
-		[NativeName(NativeNameType.Type, "void*")]
+		[NativeName(NativeNameType.Type, "void *")]
 		public unsafe void* Data;
 
 

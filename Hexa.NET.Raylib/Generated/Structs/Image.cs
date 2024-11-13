@@ -27,7 +27,7 @@ namespace Hexa.NET.Raylib
 		/// Image raw data<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "data")]
-		[NativeName(NativeNameType.Type, "void*")]
+		[NativeName(NativeNameType.Type, "void *")]
 		public unsafe void* Data;
 
 		/// <summary>

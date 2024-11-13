@@ -48,21 +48,21 @@ namespace Hexa.NET.Raylib
 		/// Meshes array<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "meshes")]
-		[NativeName(NativeNameType.Type, "Mesh*")]
+		[NativeName(NativeNameType.Type, "Mesh *")]
 		public unsafe Mesh* Meshes;
 
 		/// <summary>
 		/// Materials array<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "materials")]
-		[NativeName(NativeNameType.Type, "Material*")]
+		[NativeName(NativeNameType.Type, "Material *")]
 		public unsafe Material* Materials;
 
 		/// <summary>
 		/// Mesh material number<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "meshMaterial")]
-		[NativeName(NativeNameType.Type, "int*")]
+		[NativeName(NativeNameType.Type, "int *")]
 		public unsafe int* MeshMaterial;
 
 		/// <summary>
@@ -76,14 +76,14 @@ namespace Hexa.NET.Raylib
 		/// Bones information (skeleton)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "bones")]
-		[NativeName(NativeNameType.Type, "BoneInfo*")]
+		[NativeName(NativeNameType.Type, "BoneInfo *")]
 		public unsafe BoneInfo* Bones;
 
 		/// <summary>
 		/// Bones base transformation (pose)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "bindPose")]
-		[NativeName(NativeNameType.Type, "Transform*")]
+		[NativeName(NativeNameType.Type, "Transform *")]
 		public unsafe Transform* BindPose;
 
 

@@ -18,14 +18,717 @@ namespace Hexa.NET.Raylib
 	public unsafe partial class Raylib
 	{
 
+		/// <summary>
+		/// Shaders management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadShaderCode")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadShaderCode([NativeName(NativeNameType.Param, "vsCode")] [NativeName(NativeNameType.Type, "char const *")] ref byte vsCode, [NativeName(NativeNameType.Param, "fsCode")] [NativeName(NativeNameType.Type, "char const *")] ref byte fsCode)
+		{
+			fixed (byte* pvsCode = &vsCode)
+			{
+				fixed (byte* pfsCode = &fsCode)
+				{
+					uint ret = RlLoadShaderCodeNative((byte*)pvsCode, (byte*)pfsCode);
+					return ret;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Shaders management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadShaderCode")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadShaderCode([NativeName(NativeNameType.Param, "vsCode")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> vsCode, [NativeName(NativeNameType.Param, "fsCode")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fsCode)
+		{
+			fixed (byte* pvsCode = vsCode)
+			{
+				fixed (byte* pfsCode = fsCode)
+				{
+					uint ret = RlLoadShaderCodeNative((byte*)pvsCode, (byte*)pfsCode);
+					return ret;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Shaders management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadShaderCode")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadShaderCode([NativeName(NativeNameType.Param, "vsCode")] [NativeName(NativeNameType.Type, "char const *")] string vsCode, [NativeName(NativeNameType.Param, "fsCode")] [NativeName(NativeNameType.Type, "char const *")] string fsCode)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (vsCode != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(vsCode);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(vsCode, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			byte* pStr1 = null;
+			int pStrSize1 = 0;
+			if (fsCode != null)
+			{
+				pStrSize1 = Utils.GetByteCountUTF8(fsCode);
+				if (pStrSize1 >= Utils.MaxStackallocSize)
+				{
+					pStr1 = Utils.Alloc<byte>(pStrSize1 + 1);
+				}
+				else
+				{
+					byte* pStrStack1 = stackalloc byte[pStrSize1 + 1];
+					pStr1 = pStrStack1;
+				}
+				int pStrOffset1 = Utils.EncodeStringUTF8(fsCode, pStr1, pStrSize1);
+				pStr1[pStrOffset1] = 0;
+			}
+			uint ret = RlLoadShaderCodeNative(pStr0, pStr1);
+			if (pStrSize1 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr1);
+			}
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlCompileShader")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint RlCompileShaderNative([NativeName(NativeNameType.Param, "shaderCode")] [NativeName(NativeNameType.Type, "char const *")] byte* shaderCode, [NativeName(NativeNameType.Param, "type")] [NativeName(NativeNameType.Type, "int")] int type)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, int, uint>)funcTable[682])(shaderCode, type);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<nint, int, uint>)funcTable[682])((nint)shaderCode, type);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlCompileShader")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlCompileShader([NativeName(NativeNameType.Param, "shaderCode")] [NativeName(NativeNameType.Type, "char const *")] byte* shaderCode, [NativeName(NativeNameType.Param, "type")] [NativeName(NativeNameType.Type, "int")] int type)
+		{
+			uint ret = RlCompileShaderNative(shaderCode, type);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlCompileShader")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlCompileShader([NativeName(NativeNameType.Param, "shaderCode")] [NativeName(NativeNameType.Type, "char const *")] ref byte shaderCode, [NativeName(NativeNameType.Param, "type")] [NativeName(NativeNameType.Type, "int")] int type)
+		{
+			fixed (byte* pshaderCode = &shaderCode)
+			{
+				uint ret = RlCompileShaderNative((byte*)pshaderCode, type);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlCompileShader")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlCompileShader([NativeName(NativeNameType.Param, "shaderCode")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> shaderCode, [NativeName(NativeNameType.Param, "type")] [NativeName(NativeNameType.Type, "int")] int type)
+		{
+			fixed (byte* pshaderCode = shaderCode)
+			{
+				uint ret = RlCompileShaderNative((byte*)pshaderCode, type);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlCompileShader")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlCompileShader([NativeName(NativeNameType.Param, "shaderCode")] [NativeName(NativeNameType.Type, "char const *")] string shaderCode, [NativeName(NativeNameType.Param, "type")] [NativeName(NativeNameType.Type, "int")] int type)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (shaderCode != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(shaderCode);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(shaderCode, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			uint ret = RlCompileShaderNative(pStr0, type);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlLoadShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint RlLoadShaderProgramNative([NativeName(NativeNameType.Param, "vShaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint vShaderId, [NativeName(NativeNameType.Param, "fShaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint fShaderId)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, uint, uint>)funcTable[683])(vShaderId, fShaderId);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<uint, uint, uint>)funcTable[683])(vShaderId, fShaderId);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlLoadShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadShaderProgram([NativeName(NativeNameType.Param, "vShaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint vShaderId, [NativeName(NativeNameType.Param, "fShaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint fShaderId)
+		{
+			uint ret = RlLoadShaderProgramNative(vShaderId, fShaderId);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlUnloadShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlUnloadShaderProgramNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[684])(id);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[684])(id);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlUnloadShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlUnloadShaderProgram([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id)
+		{
+			RlUnloadShaderProgramNative(id);
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationUniform")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static int RlGetLocationUniformNative([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "uniformName")] [NativeName(NativeNameType.Type, "char const *")] byte* uniformName)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, byte*, int>)funcTable[685])(shaderId, uniformName);
+			#else
+			return (int)((delegate* unmanaged[Cdecl]<uint, nint, int>)funcTable[685])(shaderId, (nint)uniformName);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationUniform")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationUniform([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "uniformName")] [NativeName(NativeNameType.Type, "char const *")] byte* uniformName)
+		{
+			int ret = RlGetLocationUniformNative(shaderId, uniformName);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationUniform")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationUniform([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "uniformName")] [NativeName(NativeNameType.Type, "char const *")] ref byte uniformName)
+		{
+			fixed (byte* puniformName = &uniformName)
+			{
+				int ret = RlGetLocationUniformNative(shaderId, (byte*)puniformName);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationUniform")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationUniform([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "uniformName")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> uniformName)
+		{
+			fixed (byte* puniformName = uniformName)
+			{
+				int ret = RlGetLocationUniformNative(shaderId, (byte*)puniformName);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationUniform")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationUniform([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "uniformName")] [NativeName(NativeNameType.Type, "char const *")] string uniformName)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (uniformName != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(uniformName);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(uniformName, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			int ret = RlGetLocationUniformNative(shaderId, pStr0);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationAttrib")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static int RlGetLocationAttribNative([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "attribName")] [NativeName(NativeNameType.Type, "char const *")] byte* attribName)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, byte*, int>)funcTable[686])(shaderId, attribName);
+			#else
+			return (int)((delegate* unmanaged[Cdecl]<uint, nint, int>)funcTable[686])(shaderId, (nint)attribName);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationAttrib")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationAttrib([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "attribName")] [NativeName(NativeNameType.Type, "char const *")] byte* attribName)
+		{
+			int ret = RlGetLocationAttribNative(shaderId, attribName);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationAttrib")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationAttrib([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "attribName")] [NativeName(NativeNameType.Type, "char const *")] ref byte attribName)
+		{
+			fixed (byte* pattribName = &attribName)
+			{
+				int ret = RlGetLocationAttribNative(shaderId, (byte*)pattribName);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationAttrib")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationAttrib([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "attribName")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> attribName)
+		{
+			fixed (byte* pattribName = attribName)
+			{
+				int ret = RlGetLocationAttribNative(shaderId, (byte*)pattribName);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetLocationAttrib")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int RlGetLocationAttrib([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId, [NativeName(NativeNameType.Param, "attribName")] [NativeName(NativeNameType.Type, "char const *")] string attribName)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (attribName != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(attribName);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(attribName, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			int ret = RlGetLocationAttribNative(shaderId, pStr0);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniform")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlSetUniformNative([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "value")] [NativeName(NativeNameType.Type, "void const *")] void* value, [NativeName(NativeNameType.Param, "uniformType")] [NativeName(NativeNameType.Type, "int")] int uniformType, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "int")] int count)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<int, void*, int, int, void>)funcTable[687])(locIndex, value, uniformType, count);
+			#else
+			((delegate* unmanaged[Cdecl]<int, nint, int, int, void>)funcTable[687])(locIndex, (nint)value, uniformType, count);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniform")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlSetUniform([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "value")] [NativeName(NativeNameType.Type, "void const *")] void* value, [NativeName(NativeNameType.Param, "uniformType")] [NativeName(NativeNameType.Type, "int")] int uniformType, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "int")] int count)
+		{
+			RlSetUniformNative(locIndex, value, uniformType, count);
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniformMatrix")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlSetUniformMatrixNative([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "mat")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 mat)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<int, Matrix4x4, void>)funcTable[688])(locIndex, mat);
+			#else
+			((delegate* unmanaged[Cdecl]<int, Matrix4x4, void>)funcTable[688])(locIndex, mat);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniformMatrix")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlSetUniformMatrix([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "mat")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 mat)
+		{
+			RlSetUniformMatrixNative(locIndex, mat);
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniformSampler")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlSetUniformSamplerNative([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "textureId")] [NativeName(NativeNameType.Type, "unsigned int")] uint textureId)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<int, uint, void>)funcTable[689])(locIndex, textureId);
+			#else
+			((delegate* unmanaged[Cdecl]<int, uint, void>)funcTable[689])(locIndex, textureId);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetUniformSampler")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlSetUniformSampler([NativeName(NativeNameType.Param, "locIndex")] [NativeName(NativeNameType.Type, "int")] int locIndex, [NativeName(NativeNameType.Param, "textureId")] [NativeName(NativeNameType.Type, "unsigned int")] uint textureId)
+		{
+			RlSetUniformSamplerNative(locIndex, textureId);
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetShader")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlSetShaderNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "locs")] [NativeName(NativeNameType.Type, "int *")] int* locs)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, int*, void>)funcTable[690])(id, locs);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, nint, void>)funcTable[690])(id, (nint)locs);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetShader")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlSetShader([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "locs")] [NativeName(NativeNameType.Type, "int *")] int* locs)
+		{
+			RlSetShaderNative(id, locs);
+		}
+
+		[NativeName(NativeNameType.Func, "rlSetShader")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlSetShader([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "locs")] [NativeName(NativeNameType.Type, "int *")] ref int locs)
+		{
+			fixed (int* plocs = &locs)
+			{
+				RlSetShaderNative(id, (int*)plocs);
+			}
+		}
+
+		/// <summary>
+		/// Compute shader management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadComputeShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint RlLoadComputeShaderProgramNative([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, uint>)funcTable[691])(shaderId);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<uint, uint>)funcTable[691])(shaderId);
+			#endif
+		}
+
+		/// <summary>
+		/// Compute shader management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadComputeShaderProgram")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadComputeShaderProgram([NativeName(NativeNameType.Param, "shaderId")] [NativeName(NativeNameType.Type, "unsigned int")] uint shaderId)
+		{
+			uint ret = RlLoadComputeShaderProgramNative(shaderId);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlComputeShaderDispatch")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlComputeShaderDispatchNative([NativeName(NativeNameType.Param, "groupX")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupX, [NativeName(NativeNameType.Param, "groupY")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupY, [NativeName(NativeNameType.Param, "groupZ")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupZ)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, uint, uint, void>)funcTable[692])(groupX, groupY, groupZ);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, uint, uint, void>)funcTable[692])(groupX, groupY, groupZ);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlComputeShaderDispatch")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlComputeShaderDispatch([NativeName(NativeNameType.Param, "groupX")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupX, [NativeName(NativeNameType.Param, "groupY")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupY, [NativeName(NativeNameType.Param, "groupZ")] [NativeName(NativeNameType.Type, "unsigned int")] uint groupZ)
+		{
+			RlComputeShaderDispatchNative(groupX, groupY, groupZ);
+		}
+
+		/// <summary>
+		/// Shader buffer storage object management (ssbo)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint RlLoadShaderBufferNative([NativeName(NativeNameType.Param, "size")] [NativeName(NativeNameType.Type, "unsigned int")] uint size, [NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "void const *")] void* data, [NativeName(NativeNameType.Param, "usageHint")] [NativeName(NativeNameType.Type, "int")] int usageHint)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, void*, int, uint>)funcTable[693])(size, data, usageHint);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<uint, nint, int, uint>)funcTable[693])(size, (nint)data, usageHint);
+			#endif
+		}
+
+		/// <summary>
+		/// Shader buffer storage object management (ssbo)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlLoadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlLoadShaderBuffer([NativeName(NativeNameType.Param, "size")] [NativeName(NativeNameType.Type, "unsigned int")] uint size, [NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "void const *")] void* data, [NativeName(NativeNameType.Param, "usageHint")] [NativeName(NativeNameType.Type, "int")] int usageHint)
+		{
+			uint ret = RlLoadShaderBufferNative(size, data, usageHint);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlUnloadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlUnloadShaderBufferNative([NativeName(NativeNameType.Param, "ssboId")] [NativeName(NativeNameType.Type, "unsigned int")] uint ssboId)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[694])(ssboId);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[694])(ssboId);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlUnloadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlUnloadShaderBuffer([NativeName(NativeNameType.Param, "ssboId")] [NativeName(NativeNameType.Type, "unsigned int")] uint ssboId)
+		{
+			RlUnloadShaderBufferNative(ssboId);
+		}
+
+		[NativeName(NativeNameType.Func, "rlUpdateShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlUpdateShaderBufferNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "void const *")] void* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "unsigned int")] uint dataSize, [NativeName(NativeNameType.Param, "offset")] [NativeName(NativeNameType.Type, "unsigned int")] uint offset)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, void*, uint, uint, void>)funcTable[695])(id, data, dataSize, offset);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, nint, uint, uint, void>)funcTable[695])(id, (nint)data, dataSize, offset);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlUpdateShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlUpdateShaderBuffer([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "void const *")] void* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "unsigned int")] uint dataSize, [NativeName(NativeNameType.Param, "offset")] [NativeName(NativeNameType.Type, "unsigned int")] uint offset)
+		{
+			RlUpdateShaderBufferNative(id, data, dataSize, offset);
+		}
+
+		[NativeName(NativeNameType.Func, "rlBindShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlBindShaderBufferNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "unsigned int")] uint index)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, uint, void>)funcTable[696])(id, index);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, uint, void>)funcTable[696])(id, index);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlBindShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlBindShaderBuffer([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "unsigned int")] uint index)
+		{
+			RlBindShaderBufferNative(id, index);
+		}
+
+		[NativeName(NativeNameType.Func, "rlReadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlReadShaderBufferNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "dest")] [NativeName(NativeNameType.Type, "void *")] void* dest, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "unsigned int")] uint count, [NativeName(NativeNameType.Param, "offset")] [NativeName(NativeNameType.Type, "unsigned int")] uint offset)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, void*, uint, uint, void>)funcTable[697])(id, dest, count, offset);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, nint, uint, uint, void>)funcTable[697])(id, (nint)dest, count, offset);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlReadShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlReadShaderBuffer([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "dest")] [NativeName(NativeNameType.Type, "void *")] void* dest, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "unsigned int")] uint count, [NativeName(NativeNameType.Param, "offset")] [NativeName(NativeNameType.Type, "unsigned int")] uint offset)
+		{
+			RlReadShaderBufferNative(id, dest, count, offset);
+		}
+
+		[NativeName(NativeNameType.Func, "rlCopyShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlCopyShaderBufferNative([NativeName(NativeNameType.Param, "destId")] [NativeName(NativeNameType.Type, "unsigned int")] uint destId, [NativeName(NativeNameType.Param, "srcId")] [NativeName(NativeNameType.Type, "unsigned int")] uint srcId, [NativeName(NativeNameType.Param, "destOffset")] [NativeName(NativeNameType.Type, "unsigned int")] uint destOffset, [NativeName(NativeNameType.Param, "srcOffset")] [NativeName(NativeNameType.Type, "unsigned int")] uint srcOffset, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "unsigned int")] uint count)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, uint, uint, uint, uint, void>)funcTable[698])(destId, srcId, destOffset, srcOffset, count);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, uint, uint, uint, uint, void>)funcTable[698])(destId, srcId, destOffset, srcOffset, count);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlCopyShaderBuffer")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlCopyShaderBuffer([NativeName(NativeNameType.Param, "destId")] [NativeName(NativeNameType.Type, "unsigned int")] uint destId, [NativeName(NativeNameType.Param, "srcId")] [NativeName(NativeNameType.Type, "unsigned int")] uint srcId, [NativeName(NativeNameType.Param, "destOffset")] [NativeName(NativeNameType.Type, "unsigned int")] uint destOffset, [NativeName(NativeNameType.Param, "srcOffset")] [NativeName(NativeNameType.Type, "unsigned int")] uint srcOffset, [NativeName(NativeNameType.Param, "count")] [NativeName(NativeNameType.Type, "unsigned int")] uint count)
+		{
+			RlCopyShaderBufferNative(destId, srcId, destOffset, srcOffset, count);
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetShaderBufferSize")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint RlGetShaderBufferSizeNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<uint, uint>)funcTable[699])(id);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<uint, uint>)funcTable[699])(id);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetShaderBufferSize")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint RlGetShaderBufferSize([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id)
+		{
+			uint ret = RlGetShaderBufferSizeNative(id);
+			return ret;
+		}
+
+		/// <summary>
+		/// Buffer management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlBindImageTexture")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void RlBindImageTextureNative([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "unsigned int")] uint index, [NativeName(NativeNameType.Param, "format")] [NativeName(NativeNameType.Type, "int")] int format, [NativeName(NativeNameType.Param, "readonly")] [NativeName(NativeNameType.Type, "bool")] byte @readonly)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<uint, uint, int, byte, void>)funcTable[700])(id, index, format, @readonly);
+			#else
+			((delegate* unmanaged[Cdecl]<uint, uint, int, byte, void>)funcTable[700])(id, index, format, @readonly);
+			#endif
+		}
+
+		/// <summary>
+		/// Buffer management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlBindImageTexture")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void RlBindImageTexture([NativeName(NativeNameType.Param, "id")] [NativeName(NativeNameType.Type, "unsigned int")] uint id, [NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "unsigned int")] uint index, [NativeName(NativeNameType.Param, "format")] [NativeName(NativeNameType.Type, "int")] int format, [NativeName(NativeNameType.Param, "readonly")] [NativeName(NativeNameType.Type, "bool")] bool @readonly)
+		{
+			RlBindImageTextureNative(id, index, format, @readonly ? (byte)1 : (byte)0);
+		}
+
+		/// <summary>
+		/// Matrix state management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlGetMatrixModelview")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Matrix4x4 RlGetMatrixModelviewNative()
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[701])();
+			#else
+			return (Matrix4x4)((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[701])();
+			#endif
+		}
+
+		/// <summary>
+		/// Matrix state management<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Func, "rlGetMatrixModelview")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		public static Matrix4x4 RlGetMatrixModelview()
+		{
+			Matrix4x4 ret = RlGetMatrixModelviewNative();
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetMatrixProjection")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Matrix4x4 RlGetMatrixProjectionNative()
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[702])();
+			#else
+			return (Matrix4x4)((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[702])();
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetMatrixProjection")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		public static Matrix4x4 RlGetMatrixProjection()
+		{
+			Matrix4x4 ret = RlGetMatrixProjectionNative();
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetMatrixTransform")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Matrix4x4 RlGetMatrixTransformNative()
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[703])();
+			#else
+			return (Matrix4x4)((delegate* unmanaged[Cdecl]<Matrix4x4>)funcTable[703])();
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "rlGetMatrixTransform")]
+		[return: NativeName(NativeNameType.Type, "Matrix")]
+		public static Matrix4x4 RlGetMatrixTransform()
+		{
+			Matrix4x4 ret = RlGetMatrixTransformNative();
+			return ret;
+		}
+
 		[NativeName(NativeNameType.Func, "rlGetMatrixProjectionStereo")]
 		[return: NativeName(NativeNameType.Type, "Matrix")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static Matrix4x4 RlGetMatrixProjectionStereoNative([NativeName(NativeNameType.Param, "eye")] [NativeName(NativeNameType.Type, "int")] int eye)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, Matrix4x4>)vt[704])(eye);
+			return ((delegate* unmanaged[Cdecl]<int, Matrix4x4>)funcTable[704])(eye);
 			#else
-			return (Matrix4x4)((delegate* unmanaged[Cdecl]<int, Matrix4x4>)vt[704])(eye);
+			return (Matrix4x4)((delegate* unmanaged[Cdecl]<int, Matrix4x4>)funcTable[704])(eye);
 			#endif
 		}
 
@@ -39,12 +742,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlGetMatrixViewOffsetStereo")]
 		[return: NativeName(NativeNameType.Type, "Matrix")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static Matrix4x4 RlGetMatrixViewOffsetStereoNative([NativeName(NativeNameType.Param, "eye")] [NativeName(NativeNameType.Type, "int")] int eye)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, Matrix4x4>)vt[705])(eye);
+			return ((delegate* unmanaged[Cdecl]<int, Matrix4x4>)funcTable[705])(eye);
 			#else
-			return (Matrix4x4)((delegate* unmanaged[Cdecl]<int, Matrix4x4>)vt[705])(eye);
+			return (Matrix4x4)((delegate* unmanaged[Cdecl]<int, Matrix4x4>)funcTable[705])(eye);
 			#endif
 		}
 
@@ -58,12 +762,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlSetMatrixProjection")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlSetMatrixProjectionNative([NativeName(NativeNameType.Param, "proj")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 proj)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)vt[706])(proj);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)funcTable[706])(proj);
 			#else
-			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)vt[706])(proj);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)funcTable[706])(proj);
 			#endif
 		}
 
@@ -76,12 +781,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlSetMatrixModelview")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlSetMatrixModelviewNative([NativeName(NativeNameType.Param, "view")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 view)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)vt[707])(view);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)funcTable[707])(view);
 			#else
-			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)vt[707])(view);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, void>)funcTable[707])(view);
 			#endif
 		}
 
@@ -94,12 +800,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlSetMatrixProjectionStereo")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlSetMatrixProjectionStereoNative([NativeName(NativeNameType.Param, "right")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 right, [NativeName(NativeNameType.Param, "left")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 left)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)vt[708])(right, left);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)funcTable[708])(right, left);
 			#else
-			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)vt[708])(right, left);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)funcTable[708])(right, left);
 			#endif
 		}
 
@@ -112,12 +819,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlSetMatrixViewOffsetStereo")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlSetMatrixViewOffsetStereoNative([NativeName(NativeNameType.Param, "right")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 right, [NativeName(NativeNameType.Param, "left")] [NativeName(NativeNameType.Type, "Matrix")] Matrix4x4 left)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)vt[709])(right, left);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)funcTable[709])(right, left);
 			#else
-			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)vt[709])(right, left);
+			((delegate* unmanaged[Cdecl]<Matrix4x4, Matrix4x4, void>)funcTable[709])(right, left);
 			#endif
 		}
 
@@ -133,12 +841,13 @@ namespace Hexa.NET.Raylib
 		/// </summary>
 		[NativeName(NativeNameType.Func, "rlLoadDrawCube")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlLoadDrawCubeNative()
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<void>)vt[710])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[710])();
 			#else
-			((delegate* unmanaged[Cdecl]<void>)vt[710])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[710])();
 			#endif
 		}
 
@@ -154,12 +863,13 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "rlLoadDrawQuad")]
 		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static void RlLoadDrawQuadNative()
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<void>)vt[711])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[711])();
 			#else
-			((delegate* unmanaged[Cdecl]<void>)vt[711])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[711])();
 			#endif
 		}
 

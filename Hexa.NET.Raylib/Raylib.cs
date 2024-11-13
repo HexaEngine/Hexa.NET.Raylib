@@ -36,7 +36,7 @@
         public static readonly Color Magenta = new Color(255, 0, 255, 255);
         public static readonly Color RayWhite = new Color(245, 245, 245, 255);
 
-        internal static string GetLibraryName()
+        public static string GetLibraryName()
         {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {

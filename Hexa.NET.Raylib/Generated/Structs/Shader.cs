@@ -34,7 +34,7 @@ namespace Hexa.NET.Raylib
 		/// Shader locations array (RL_MAX_SHADER_LOCATIONS)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "locs")]
-		[NativeName(NativeNameType.Type, "int*")]
+		[NativeName(NativeNameType.Type, "int *")]
 		public unsafe int* Locs;
 
 

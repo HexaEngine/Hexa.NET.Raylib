@@ -41,7 +41,7 @@ namespace Hexa.NET.Raylib
 		/// Filepaths entries<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "paths")]
-		[NativeName(NativeNameType.Type, "char**")]
+		[NativeName(NativeNameType.Type, "char * *")]
 		public unsafe byte** Paths;
 
 

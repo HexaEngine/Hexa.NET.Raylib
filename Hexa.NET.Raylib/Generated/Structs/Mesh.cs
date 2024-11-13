@@ -41,77 +41,77 @@ namespace Hexa.NET.Raylib
 		/// Vertex position (XYZ - 3 components per vertex) (shader-location = 0)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "vertices")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Vertices;
 
 		/// <summary>
 		/// Vertex texture coordinates (UV - 2 components per vertex) (shader-location = 1)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "texcoords")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Texcoords;
 
 		/// <summary>
 		/// Vertex texture second coordinates (UV - 2 components per vertex) (shader-location = 5)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "texcoords2")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Texcoords2;
 
 		/// <summary>
 		/// Vertex normals (XYZ - 3 components per vertex) (shader-location = 2)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "normals")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Normals;
 
 		/// <summary>
 		/// Vertex tangents (XYZW - 4 components per vertex) (shader-location = 4)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "tangents")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* Tangents;
 
 		/// <summary>
 		/// Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "colors")]
-		[NativeName(NativeNameType.Type, "unsigned char*")]
+		[NativeName(NativeNameType.Type, "unsigned char *")]
 		public unsafe byte* Colors;
 
 		/// <summary>
 		/// Vertex indices (in case vertex data comes indexed)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "indices")]
-		[NativeName(NativeNameType.Type, "unsigned short*")]
+		[NativeName(NativeNameType.Type, "unsigned short *")]
 		public unsafe ushort* Indices;
 
 		/// <summary>
 		/// Animated vertex positions (after bones transformations)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "animVertices")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* AnimVertices;
 
 		/// <summary>
 		/// Animated normals (after bones transformations)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "animNormals")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* AnimNormals;
 
 		/// <summary>
 		/// Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "boneIds")]
-		[NativeName(NativeNameType.Type, "unsigned char*")]
+		[NativeName(NativeNameType.Type, "unsigned char *")]
 		public unsafe byte* BoneIds;
 
 		/// <summary>
 		/// Vertex bone weight, up to 4 bones influence by vertex (skinning)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "boneWeights")]
-		[NativeName(NativeNameType.Type, "float*")]
+		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* BoneWeights;
 
 		/// <summary>
@@ -125,7 +125,7 @@ namespace Hexa.NET.Raylib
 		/// OpenGL Vertex Buffer Objects id (default vertex data)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "vboId")]
-		[NativeName(NativeNameType.Type, "unsigned int*")]
+		[NativeName(NativeNameType.Type, "unsigned int *")]
 		public unsafe uint* VboId;
 
 

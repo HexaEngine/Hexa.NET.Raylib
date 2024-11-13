@@ -55,7 +55,7 @@ namespace Hexa.NET.Raylib
 		/// Audio context data, depends on type<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "ctxData")]
-		[NativeName(NativeNameType.Type, "void*")]
+		[NativeName(NativeNameType.Type, "void *")]
 		public unsafe void* CtxData;
 
 

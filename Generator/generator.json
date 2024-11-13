@@ -7,7 +7,6 @@
   "GenerateSizeOfStructs": false,
   "GeneratePlaceholderComments": false,
   "GenerateMetadata": true,
-  "ImportType": "VTable",
   "ConstantNamingConvention": "Unknown",
   "TypeMappings": {
     "ssize_t": "nint",
