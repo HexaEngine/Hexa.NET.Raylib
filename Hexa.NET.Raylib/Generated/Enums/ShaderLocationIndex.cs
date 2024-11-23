@@ -201,5 +201,26 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_MAP_BRDF")]
 		[NativeName(NativeNameType.Value, "25")]
 		LocMapBrdf = unchecked(25),
+
+		/// <summary>
+		/// Shader location: vertex attribute: boneIds<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_VERTEX_BONEIDS")]
+		[NativeName(NativeNameType.Value, "26")]
+		LocVertexBoneids = unchecked(26),
+
+		/// <summary>
+		/// Shader location: vertex attribute: boneWeights<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_VERTEX_BONEWEIGHTS")]
+		[NativeName(NativeNameType.Value, "27")]
+		LocVertexBoneweights = unchecked(27),
+
+		/// <summary>
+		/// Shader location: array of matrices uniform: boneMatrices<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_BONE_MATRICES")]
+		[NativeName(NativeNameType.Value, "28")]
+		LocBoneMatrices = unchecked(28),
 	}
 }

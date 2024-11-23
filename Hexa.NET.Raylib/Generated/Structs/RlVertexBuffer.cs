@@ -45,6 +45,13 @@ namespace Hexa.NET.Raylib
 		public unsafe float* Texcoords;
 
 		/// <summary>
+		/// Vertex normal (XYZ - 3 components per vertex) (shader-location = 2)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "normals")]
+		[NativeName(NativeNameType.Type, "float *")]
+		public unsafe float* Normals;
+
+		/// <summary>
 		/// Vertex colors (RGBA - 4 components per vertex) (shader-location = 3)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "colors")]
@@ -66,21 +73,23 @@ namespace Hexa.NET.Raylib
 		public uint VaoId;
 
 		/// <summary>
-		/// OpenGL Vertex Buffer Objects id (4 types of vertex data)<br/>
+		/// OpenGL Vertex Buffer Objects id (5 types of vertex data)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "vboId")]
-		[NativeName(NativeNameType.Type, "unsigned int[4]")]
+		[NativeName(NativeNameType.Type, "unsigned int[5]")]
 		public uint VboId_0;
 		public uint VboId_1;
 		public uint VboId_2;
 		public uint VboId_3;
+		public uint VboId_4;
 
 
-		public unsafe RlVertexBuffer(int elementCount = default, float* vertices = default, float* texcoords = default, byte* colors = default, uint* indices = default, uint vaoId = default, uint* vboId = default)
+		public unsafe RlVertexBuffer(int elementCount = default, float* vertices = default, float* texcoords = default, float* normals = default, byte* colors = default, uint* indices = default, uint vaoId = default, uint* vboId = default)
 		{
 			ElementCount = elementCount;
 			Vertices = vertices;
 			Texcoords = texcoords;
+			Normals = normals;
 			Colors = colors;
 			Indices = indices;
 			VaoId = vaoId;
@@ -90,14 +99,16 @@ namespace Hexa.NET.Raylib
 				VboId_1 = vboId[1];
 				VboId_2 = vboId[2];
 				VboId_3 = vboId[3];
+				VboId_4 = vboId[4];
 			}
 		}
 
-		public unsafe RlVertexBuffer(int elementCount = default, float* vertices = default, float* texcoords = default, byte* colors = default, uint* indices = default, uint vaoId = default, Span<uint> vboId = default)
+		public unsafe RlVertexBuffer(int elementCount = default, float* vertices = default, float* texcoords = default, float* normals = default, byte* colors = default, uint* indices = default, uint vaoId = default, Span<uint> vboId = default)
 		{
 			ElementCount = elementCount;
 			Vertices = vertices;
 			Texcoords = texcoords;
+			Normals = normals;
 			Colors = colors;
 			Indices = indices;
 			VaoId = vaoId;
@@ -107,6 +118,7 @@ namespace Hexa.NET.Raylib
 				VboId_1 = vboId[1];
 				VboId_2 = vboId[2];
 				VboId_3 = vboId[3];
+				VboId_4 = vboId[4];
 			}
 		}
 

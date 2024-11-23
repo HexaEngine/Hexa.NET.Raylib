@@ -77,10 +77,38 @@ namespace Hexa.NET.Raylib
 		Ivec4 = unchecked(7),
 
 		/// <summary>
+		/// Shader uniform type: unsigned int<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "RL_SHADER_UNIFORM_UINT")]
+		[NativeName(NativeNameType.Value, "8")]
+		Uint = unchecked(8),
+
+		/// <summary>
+		/// Shader uniform type: uivec2 (2 unsigned int)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "RL_SHADER_UNIFORM_UIVEC2")]
+		[NativeName(NativeNameType.Value, "9")]
+		Uivec2 = unchecked(9),
+
+		/// <summary>
+		/// Shader uniform type: uivec3 (3 unsigned int)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "RL_SHADER_UNIFORM_UIVEC3")]
+		[NativeName(NativeNameType.Value, "10")]
+		Uivec3 = unchecked(10),
+
+		/// <summary>
+		/// Shader uniform type: uivec4 (4 unsigned int)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "RL_SHADER_UNIFORM_UIVEC4")]
+		[NativeName(NativeNameType.Value, "11")]
+		Uivec4 = unchecked(11),
+
+		/// <summary>
 		/// Shader uniform type: sampler2d<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "RL_SHADER_UNIFORM_SAMPLER2D")]
-		[NativeName(NativeNameType.Value, "8")]
-		Sampler2D = unchecked(8),
+		[NativeName(NativeNameType.Value, "12")]
+		Sampler2D = unchecked(12),
 	}
 }

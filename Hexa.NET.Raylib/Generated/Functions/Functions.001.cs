@@ -20,6 +20,46 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "GetDirectoryPath")]
 		[return: NativeName(NativeNameType.Type, "char const *")]
+		public static string GetDirectoryPathS([NativeName(NativeNameType.Param, "filePath")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> filePath)
+		{
+			fixed (byte* pfilePath = filePath)
+			{
+				string ret = Utils.DecodeStringUTF8(GetDirectoryPathNative((byte*)pfilePath));
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "GetDirectoryPath")]
+		[return: NativeName(NativeNameType.Type, "char const *")]
+		public static byte* GetDirectoryPath([NativeName(NativeNameType.Param, "filePath")] [NativeName(NativeNameType.Type, "char const *")] string filePath)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (filePath != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(filePath);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(filePath, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			byte* ret = GetDirectoryPathNative(pStr0);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "GetDirectoryPath")]
+		[return: NativeName(NativeNameType.Type, "char const *")]
 		public static string GetDirectoryPathS([NativeName(NativeNameType.Param, "filePath")] [NativeName(NativeNameType.Type, "char const *")] string filePath)
 		{
 			byte* pStr0 = null;
@@ -53,9 +93,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* GetPrevDirectoryPathNative([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] byte* dirPath)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, byte*>)funcTable[129])(dirPath);
+			return ((delegate* unmanaged[Cdecl]<byte*, byte*>)funcTable[131])(dirPath);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint, nint>)funcTable[129])((nint)dirPath);
+			return (byte*)((delegate* unmanaged[Cdecl]<nint, nint>)funcTable[131])((nint)dirPath);
 			#endif
 		}
 
@@ -183,9 +223,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* GetWorkingDirectoryNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*>)funcTable[130])();
+			return ((delegate* unmanaged[Cdecl]<byte*>)funcTable[132])();
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint>)funcTable[130])();
+			return (byte*)((delegate* unmanaged[Cdecl]<nint>)funcTable[132])();
 			#endif
 		}
 
@@ -211,9 +251,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* GetApplicationDirectoryNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*>)funcTable[131])();
+			return ((delegate* unmanaged[Cdecl]<byte*>)funcTable[133])();
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint>)funcTable[131])();
+			return (byte*)((delegate* unmanaged[Cdecl]<nint>)funcTable[133])();
 			#endif
 		}
 
@@ -233,15 +273,86 @@ namespace Hexa.NET.Raylib
 			return ret;
 		}
 
+		[NativeName(NativeNameType.Func, "MakeDirectory")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static int MakeDirectoryNative([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] byte* dirPath)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, int>)funcTable[134])(dirPath);
+			#else
+			return (int)((delegate* unmanaged[Cdecl]<nint, int>)funcTable[134])((nint)dirPath);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "MakeDirectory")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int MakeDirectory([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] byte* dirPath)
+		{
+			int ret = MakeDirectoryNative(dirPath);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "MakeDirectory")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int MakeDirectory([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] ref byte dirPath)
+		{
+			fixed (byte* pdirPath = &dirPath)
+			{
+				int ret = MakeDirectoryNative((byte*)pdirPath);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "MakeDirectory")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int MakeDirectory([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> dirPath)
+		{
+			fixed (byte* pdirPath = dirPath)
+			{
+				int ret = MakeDirectoryNative((byte*)pdirPath);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "MakeDirectory")]
+		[return: NativeName(NativeNameType.Type, "int")]
+		public static int MakeDirectory([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] string dirPath)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (dirPath != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(dirPath);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(dirPath, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			int ret = MakeDirectoryNative(pStr0);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
 		[NativeName(NativeNameType.Func, "ChangeDirectory")]
 		[return: NativeName(NativeNameType.Type, "bool")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static byte ChangeDirectoryNative([NativeName(NativeNameType.Param, "dir")] [NativeName(NativeNameType.Type, "char const *")] byte* dir)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, byte>)funcTable[132])(dir);
+			return ((delegate* unmanaged[Cdecl]<byte*, byte>)funcTable[135])(dir);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<nint, byte>)funcTable[132])((nint)dir);
+			return (byte)((delegate* unmanaged[Cdecl]<nint, byte>)funcTable[135])((nint)dir);
 			#endif
 		}
 
@@ -310,9 +421,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsPathFileNative([NativeName(NativeNameType.Param, "path")] [NativeName(NativeNameType.Type, "char const *")] byte* path)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, byte>)funcTable[133])(path);
+			return ((delegate* unmanaged[Cdecl]<byte*, byte>)funcTable[136])(path);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<nint, byte>)funcTable[133])((nint)path);
+			return (byte)((delegate* unmanaged[Cdecl]<nint, byte>)funcTable[136])((nint)path);
 			#endif
 		}
 
@@ -375,15 +486,86 @@ namespace Hexa.NET.Raylib
 			return ret != 0;
 		}
 
+		[NativeName(NativeNameType.Func, "IsFileNameValid")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static byte IsFileNameValidNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, byte>)funcTable[137])(fileName);
+			#else
+			return (byte)((delegate* unmanaged[Cdecl]<nint, byte>)funcTable[137])((nint)fileName);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "IsFileNameValid")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool IsFileNameValid([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
+		{
+			byte ret = IsFileNameValidNative(fileName);
+			return ret != 0;
+		}
+
+		[NativeName(NativeNameType.Func, "IsFileNameValid")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool IsFileNameValid([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileName)
+		{
+			fixed (byte* pfileName = &fileName)
+			{
+				byte ret = IsFileNameValidNative((byte*)pfileName);
+				return ret != 0;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "IsFileNameValid")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool IsFileNameValid([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileName)
+		{
+			fixed (byte* pfileName = fileName)
+			{
+				byte ret = IsFileNameValidNative((byte*)pfileName);
+				return ret != 0;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "IsFileNameValid")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool IsFileNameValid([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] string fileName)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (fileName != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(fileName);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(fileName, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			byte ret = IsFileNameValidNative(pStr0);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret != 0;
+		}
+
 		[NativeName(NativeNameType.Func, "LoadDirectoryFiles")]
 		[return: NativeName(NativeNameType.Type, "FilePathList")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static FilePathList LoadDirectoryFilesNative([NativeName(NativeNameType.Param, "dirPath")] [NativeName(NativeNameType.Type, "char const *")] byte* dirPath)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, FilePathList>)funcTable[134])(dirPath);
+			return ((delegate* unmanaged[Cdecl]<byte*, FilePathList>)funcTable[138])(dirPath);
 			#else
-			return (FilePathList)((delegate* unmanaged[Cdecl]<nint, FilePathList>)funcTable[134])((nint)dirPath);
+			return (FilePathList)((delegate* unmanaged[Cdecl]<nint, FilePathList>)funcTable[138])((nint)dirPath);
 			#endif
 		}
 
@@ -452,9 +634,9 @@ namespace Hexa.NET.Raylib
 		internal static FilePathList LoadDirectoryFilesExNative([NativeName(NativeNameType.Param, "basePath")] [NativeName(NativeNameType.Type, "char const *")] byte* basePath, [NativeName(NativeNameType.Param, "filter")] [NativeName(NativeNameType.Type, "char const *")] byte* filter, [NativeName(NativeNameType.Param, "scanSubdirs")] [NativeName(NativeNameType.Type, "bool")] byte scanSubdirs)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, byte*, byte, FilePathList>)funcTable[135])(basePath, filter, scanSubdirs);
+			return ((delegate* unmanaged[Cdecl]<byte*, byte*, byte, FilePathList>)funcTable[139])(basePath, filter, scanSubdirs);
 			#else
-			return (FilePathList)((delegate* unmanaged[Cdecl]<nint, nint, byte, FilePathList>)funcTable[135])((nint)basePath, (nint)filter, scanSubdirs);
+			return (FilePathList)((delegate* unmanaged[Cdecl]<nint, nint, byte, FilePathList>)funcTable[139])((nint)basePath, (nint)filter, scanSubdirs);
 			#endif
 		}
 
@@ -652,9 +834,9 @@ namespace Hexa.NET.Raylib
 		internal static void UnloadDirectoryFilesNative([NativeName(NativeNameType.Param, "files")] [NativeName(NativeNameType.Type, "FilePathList")] FilePathList files)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[136])(files);
+			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[140])(files);
 			#else
-			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[136])(files);
+			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[140])(files);
 			#endif
 		}
 
@@ -671,9 +853,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsFileDroppedNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte>)funcTable[137])();
+			return ((delegate* unmanaged[Cdecl]<byte>)funcTable[141])();
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<byte>)funcTable[137])();
+			return (byte)((delegate* unmanaged[Cdecl]<byte>)funcTable[141])();
 			#endif
 		}
 
@@ -691,9 +873,9 @@ namespace Hexa.NET.Raylib
 		internal static FilePathList LoadDroppedFilesNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<FilePathList>)funcTable[138])();
+			return ((delegate* unmanaged[Cdecl]<FilePathList>)funcTable[142])();
 			#else
-			return (FilePathList)((delegate* unmanaged[Cdecl]<FilePathList>)funcTable[138])();
+			return (FilePathList)((delegate* unmanaged[Cdecl]<FilePathList>)funcTable[142])();
 			#endif
 		}
 
@@ -711,9 +893,9 @@ namespace Hexa.NET.Raylib
 		internal static void UnloadDroppedFilesNative([NativeName(NativeNameType.Param, "files")] [NativeName(NativeNameType.Type, "FilePathList")] FilePathList files)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[139])(files);
+			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[143])(files);
 			#else
-			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[139])(files);
+			((delegate* unmanaged[Cdecl]<FilePathList, void>)funcTable[143])(files);
 			#endif
 		}
 
@@ -730,9 +912,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetFileModTimeNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int>)funcTable[140])(fileName);
+			return ((delegate* unmanaged[Cdecl]<byte*, int>)funcTable[144])(fileName);
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<nint, int>)funcTable[140])((nint)fileName);
+			return (int)((delegate* unmanaged[Cdecl]<nint, int>)funcTable[144])((nint)fileName);
 			#endif
 		}
 
@@ -804,9 +986,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* CompressDataNative([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "compDataSize")] [NativeName(NativeNameType.Type, "int *")] int* compDataSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[141])(data, dataSize, compDataSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[145])(data, dataSize, compDataSize);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[141])((nint)data, dataSize, (nint)compDataSize);
+			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[145])((nint)data, dataSize, (nint)compDataSize);
 			#endif
 		}
 
@@ -928,9 +1110,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* DecompressDataNative([NativeName(NativeNameType.Param, "compData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* compData, [NativeName(NativeNameType.Param, "compDataSize")] [NativeName(NativeNameType.Type, "int")] int compDataSize, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int *")] int* dataSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[142])(compData, compDataSize, dataSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[146])(compData, compDataSize, dataSize);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[142])((nint)compData, compDataSize, (nint)dataSize);
+			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[146])((nint)compData, compDataSize, (nint)dataSize);
 			#endif
 		}
 
@@ -1028,9 +1210,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* EncodeDataBase64Native([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "outputSize")] [NativeName(NativeNameType.Type, "int *")] int* outputSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[143])(data, dataSize, outputSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, int, int*, byte*>)funcTable[147])(data, dataSize, outputSize);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[143])((nint)data, dataSize, (nint)outputSize);
+			return (byte*)((delegate* unmanaged[Cdecl]<nint, int, nint, nint>)funcTable[147])((nint)data, dataSize, (nint)outputSize);
 			#endif
 		}
 
@@ -1128,9 +1310,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* DecodeDataBase64Native([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* data, [NativeName(NativeNameType.Param, "outputSize")] [NativeName(NativeNameType.Type, "int *")] int* outputSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int*, byte*>)funcTable[144])(data, outputSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, int*, byte*>)funcTable[148])(data, outputSize);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<nint, nint, nint>)funcTable[144])((nint)data, (nint)outputSize);
+			return (byte*)((delegate* unmanaged[Cdecl]<nint, nint, nint>)funcTable[148])((nint)data, (nint)outputSize);
 			#endif
 		}
 
@@ -1222,6 +1404,99 @@ namespace Hexa.NET.Raylib
 			}
 		}
 
+		[NativeName(NativeNameType.Func, "ComputeCRC32")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint ComputeCRC32Native([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, int, uint>)funcTable[149])(data, dataSize);
+			#else
+			return (uint)((delegate* unmanaged[Cdecl]<nint, int, uint>)funcTable[149])((nint)data, dataSize);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeCRC32")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint ComputeCRC32([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			uint ret = ComputeCRC32Native(data, dataSize);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeCRC32")]
+		[return: NativeName(NativeNameType.Type, "unsigned int")]
+		public static uint ComputeCRC32([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] ref byte data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			fixed (byte* pdata = &data)
+			{
+				uint ret = ComputeCRC32Native((byte*)pdata, dataSize);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeMD5")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint* ComputeMD5Native([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, int, uint*>)funcTable[150])(data, dataSize);
+			#else
+			return (uint*)((delegate* unmanaged[Cdecl]<nint, int, nint>)funcTable[150])((nint)data, dataSize);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeMD5")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		public static uint* ComputeMD5([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			uint* ret = ComputeMD5Native(data, dataSize);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeMD5")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		public static uint* ComputeMD5([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] ref byte data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			fixed (byte* pdata = &data)
+			{
+				uint* ret = ComputeMD5Native((byte*)pdata, dataSize);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeSHA1")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static uint* ComputeSHA1Native([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, int, uint*>)funcTable[151])(data, dataSize);
+			#else
+			return (uint*)((delegate* unmanaged[Cdecl]<nint, int, nint>)funcTable[151])((nint)data, dataSize);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeSHA1")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		public static uint* ComputeSHA1([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] byte* data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			uint* ret = ComputeSHA1Native(data, dataSize);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "ComputeSHA1")]
+		[return: NativeName(NativeNameType.Type, "unsigned int *")]
+		public static uint* ComputeSHA1([NativeName(NativeNameType.Param, "data")] [NativeName(NativeNameType.Type, "unsigned char *")] ref byte data, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
+		{
+			fixed (byte* pdata = &data)
+			{
+				uint* ret = ComputeSHA1Native((byte*)pdata, dataSize);
+				return ret;
+			}
+		}
+
 		/// <summary>
 		/// Automation events functionality<br/>
 		/// </summary>
@@ -1231,9 +1506,9 @@ namespace Hexa.NET.Raylib
 		internal static AutomationEventList LoadAutomationEventListNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, AutomationEventList>)funcTable[145])(fileName);
+			return ((delegate* unmanaged[Cdecl]<byte*, AutomationEventList>)funcTable[152])(fileName);
 			#else
-			return (AutomationEventList)((delegate* unmanaged[Cdecl]<nint, AutomationEventList>)funcTable[145])((nint)fileName);
+			return (AutomationEventList)((delegate* unmanaged[Cdecl]<nint, AutomationEventList>)funcTable[152])((nint)fileName);
 			#endif
 		}
 
@@ -1311,30 +1586,20 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "UnloadAutomationEventList")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void UnloadAutomationEventListNative([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList *")] AutomationEventList* list)
+		internal static void UnloadAutomationEventListNative([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList")] AutomationEventList list)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<AutomationEventList*, void>)funcTable[146])(list);
+			((delegate* unmanaged[Cdecl]<AutomationEventList, void>)funcTable[153])(list);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, void>)funcTable[146])((nint)list);
+			((delegate* unmanaged[Cdecl]<AutomationEventList, void>)funcTable[153])(list);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "UnloadAutomationEventList")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void UnloadAutomationEventList([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList *")] AutomationEventList* list)
+		public static void UnloadAutomationEventList([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList")] AutomationEventList list)
 		{
 			UnloadAutomationEventListNative(list);
-		}
-
-		[NativeName(NativeNameType.Func, "UnloadAutomationEventList")]
-		[return: NativeName(NativeNameType.Type, "void")]
-		public static void UnloadAutomationEventList([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList *")] ref AutomationEventList list)
-		{
-			fixed (AutomationEventList* plist = &list)
-			{
-				UnloadAutomationEventListNative((AutomationEventList*)plist);
-			}
 		}
 
 		[NativeName(NativeNameType.Func, "ExportAutomationEventList")]
@@ -1343,9 +1608,9 @@ namespace Hexa.NET.Raylib
 		internal static byte ExportAutomationEventListNative([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList")] AutomationEventList list, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<AutomationEventList, byte*, byte>)funcTable[147])(list, fileName);
+			return ((delegate* unmanaged[Cdecl]<AutomationEventList, byte*, byte>)funcTable[154])(list, fileName);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<AutomationEventList, nint, byte>)funcTable[147])(list, (nint)fileName);
+			return (byte)((delegate* unmanaged[Cdecl]<AutomationEventList, nint, byte>)funcTable[154])(list, (nint)fileName);
 			#endif
 		}
 
@@ -1414,9 +1679,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetAutomationEventListNative([NativeName(NativeNameType.Param, "list")] [NativeName(NativeNameType.Type, "AutomationEventList *")] AutomationEventList* list)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<AutomationEventList*, void>)funcTable[148])(list);
+			((delegate* unmanaged[Cdecl]<AutomationEventList*, void>)funcTable[155])(list);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, void>)funcTable[148])((nint)list);
+			((delegate* unmanaged[Cdecl]<nint, void>)funcTable[155])((nint)list);
 			#endif
 		}
 
@@ -1443,9 +1708,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetAutomationEventBaseFrameNative([NativeName(NativeNameType.Param, "frame")] [NativeName(NativeNameType.Type, "int")] int frame)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[149])(frame);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[156])(frame);
 			#else
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[149])(frame);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[156])(frame);
 			#endif
 		}
 
@@ -1462,9 +1727,9 @@ namespace Hexa.NET.Raylib
 		internal static void StartAutomationEventRecordingNative()
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<void>)funcTable[150])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[157])();
 			#else
-			((delegate* unmanaged[Cdecl]<void>)funcTable[150])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[157])();
 			#endif
 		}
 
@@ -1481,9 +1746,9 @@ namespace Hexa.NET.Raylib
 		internal static void StopAutomationEventRecordingNative()
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<void>)funcTable[151])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[158])();
 			#else
-			((delegate* unmanaged[Cdecl]<void>)funcTable[151])();
+			((delegate* unmanaged[Cdecl]<void>)funcTable[158])();
 			#endif
 		}
 
@@ -1500,9 +1765,9 @@ namespace Hexa.NET.Raylib
 		internal static void PlayAutomationEventNative([NativeName(NativeNameType.Param, "event")] [NativeName(NativeNameType.Type, "AutomationEvent")] AutomationEvent evnt)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<AutomationEvent, void>)funcTable[152])(evnt);
+			((delegate* unmanaged[Cdecl]<AutomationEvent, void>)funcTable[159])(evnt);
 			#else
-			((delegate* unmanaged[Cdecl]<AutomationEvent, void>)funcTable[152])(evnt);
+			((delegate* unmanaged[Cdecl]<AutomationEvent, void>)funcTable[159])(evnt);
 			#endif
 		}
 
@@ -1522,9 +1787,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsKeyPressedNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[153])(key);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[160])(key);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[153])(key);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[160])(key);
 			#endif
 		}
 
@@ -1545,9 +1810,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsKeyPressedRepeatNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[154])(key);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[161])(key);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[154])(key);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[161])(key);
 			#endif
 		}
 
@@ -1565,9 +1830,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsKeyDownNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[155])(key);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[162])(key);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[155])(key);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[162])(key);
 			#endif
 		}
 
@@ -1585,9 +1850,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsKeyReleasedNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[156])(key);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[163])(key);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[156])(key);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[163])(key);
 			#endif
 		}
 
@@ -1605,9 +1870,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsKeyUpNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[157])(key);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[164])(key);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[157])(key);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[164])(key);
 			#endif
 		}
 
@@ -1625,9 +1890,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetKeyPressedNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[158])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[165])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[158])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[165])();
 			#endif
 		}
 
@@ -1645,9 +1910,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetCharPressedNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[159])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[166])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[159])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[166])();
 			#endif
 		}
 
@@ -1665,9 +1930,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetExitKeyNative([NativeName(NativeNameType.Param, "key")] [NativeName(NativeNameType.Type, "int")] int key)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[160])(key);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[167])(key);
 			#else
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[160])(key);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[167])(key);
 			#endif
 		}
 
@@ -1687,9 +1952,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGamepadAvailableNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[161])(gamepad);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[168])(gamepad);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[161])(gamepad);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[168])(gamepad);
 			#endif
 		}
 
@@ -1710,9 +1975,9 @@ namespace Hexa.NET.Raylib
 		internal static byte* GetGamepadNameNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte*>)funcTable[162])(gamepad);
+			return ((delegate* unmanaged[Cdecl]<int, byte*>)funcTable[169])(gamepad);
 			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<int, nint>)funcTable[162])(gamepad);
+			return (byte*)((delegate* unmanaged[Cdecl]<int, nint>)funcTable[169])(gamepad);
 			#endif
 		}
 
@@ -1738,9 +2003,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGamepadButtonPressedNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[163])(gamepad, button);
+			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[170])(gamepad, button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[163])(gamepad, button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[170])(gamepad, button);
 			#endif
 		}
 
@@ -1758,9 +2023,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGamepadButtonDownNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[164])(gamepad, button);
+			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[171])(gamepad, button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[164])(gamepad, button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[171])(gamepad, button);
 			#endif
 		}
 
@@ -1778,9 +2043,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGamepadButtonReleasedNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[165])(gamepad, button);
+			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[172])(gamepad, button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[165])(gamepad, button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[172])(gamepad, button);
 			#endif
 		}
 
@@ -1798,9 +2063,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGamepadButtonUpNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[166])(gamepad, button);
+			return ((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[173])(gamepad, button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[166])(gamepad, button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, int, byte>)funcTable[173])(gamepad, button);
 			#endif
 		}
 
@@ -1818,9 +2083,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetGamepadButtonPressedNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[167])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[174])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[167])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[174])();
 			#endif
 		}
 
@@ -1838,9 +2103,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetGamepadAxisCountNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int>)funcTable[168])(gamepad);
+			return ((delegate* unmanaged[Cdecl]<int, int>)funcTable[175])(gamepad);
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int, int>)funcTable[168])(gamepad);
+			return (int)((delegate* unmanaged[Cdecl]<int, int>)funcTable[175])(gamepad);
 			#endif
 		}
 
@@ -1858,9 +2123,9 @@ namespace Hexa.NET.Raylib
 		internal static float GetGamepadAxisMovementNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "axis")] [NativeName(NativeNameType.Type, "int")] int axis)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, float>)funcTable[169])(gamepad, axis);
+			return ((delegate* unmanaged[Cdecl]<int, int, float>)funcTable[176])(gamepad, axis);
 			#else
-			return (float)((delegate* unmanaged[Cdecl]<int, int, float>)funcTable[169])(gamepad, axis);
+			return (float)((delegate* unmanaged[Cdecl]<int, int, float>)funcTable[176])(gamepad, axis);
 			#endif
 		}
 
@@ -1878,9 +2143,9 @@ namespace Hexa.NET.Raylib
 		internal static int SetGamepadMappingsNative([NativeName(NativeNameType.Param, "mappings")] [NativeName(NativeNameType.Type, "char const *")] byte* mappings)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int>)funcTable[170])(mappings);
+			return ((delegate* unmanaged[Cdecl]<byte*, int>)funcTable[177])(mappings);
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<nint, int>)funcTable[170])((nint)mappings);
+			return (int)((delegate* unmanaged[Cdecl]<nint, int>)funcTable[177])((nint)mappings);
 			#endif
 		}
 
@@ -1943,6 +2208,25 @@ namespace Hexa.NET.Raylib
 			return ret;
 		}
 
+		[NativeName(NativeNameType.Func, "SetGamepadVibration")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void SetGamepadVibrationNative([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "leftMotor")] [NativeName(NativeNameType.Type, "float")] float leftMotor, [NativeName(NativeNameType.Param, "rightMotor")] [NativeName(NativeNameType.Type, "float")] float rightMotor, [NativeName(NativeNameType.Param, "duration")] [NativeName(NativeNameType.Type, "float")] float duration)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<int, float, float, float, void>)funcTable[178])(gamepad, leftMotor, rightMotor, duration);
+			#else
+			((delegate* unmanaged[Cdecl]<int, float, float, float, void>)funcTable[178])(gamepad, leftMotor, rightMotor, duration);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "SetGamepadVibration")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void SetGamepadVibration([NativeName(NativeNameType.Param, "gamepad")] [NativeName(NativeNameType.Type, "int")] int gamepad, [NativeName(NativeNameType.Param, "leftMotor")] [NativeName(NativeNameType.Type, "float")] float leftMotor, [NativeName(NativeNameType.Param, "rightMotor")] [NativeName(NativeNameType.Type, "float")] float rightMotor, [NativeName(NativeNameType.Param, "duration")] [NativeName(NativeNameType.Type, "float")] float duration)
+		{
+			SetGamepadVibrationNative(gamepad, leftMotor, rightMotor, duration);
+		}
+
 		/// <summary>
 		/// Input-related functions: mouse<br/>
 		/// </summary>
@@ -1952,9 +2236,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsMouseButtonPressedNative([NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[171])(button);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[179])(button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[171])(button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[179])(button);
 			#endif
 		}
 
@@ -1975,9 +2259,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsMouseButtonDownNative([NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[172])(button);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[180])(button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[172])(button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[180])(button);
 			#endif
 		}
 
@@ -1995,9 +2279,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsMouseButtonReleasedNative([NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[173])(button);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[181])(button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[173])(button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[181])(button);
 			#endif
 		}
 
@@ -2015,9 +2299,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsMouseButtonUpNative([NativeName(NativeNameType.Param, "button")] [NativeName(NativeNameType.Type, "int")] int button)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[174])(button);
+			return ((delegate* unmanaged[Cdecl]<int, byte>)funcTable[182])(button);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[174])(button);
+			return (byte)((delegate* unmanaged[Cdecl]<int, byte>)funcTable[182])(button);
 			#endif
 		}
 
@@ -2035,9 +2319,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetMouseXNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[175])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[183])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[175])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[183])();
 			#endif
 		}
 
@@ -2055,9 +2339,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetMouseYNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[176])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[184])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[176])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[184])();
 			#endif
 		}
 
@@ -2075,9 +2359,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetMousePositionNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[177])();
+			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[185])();
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[177])();
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[185])();
 			#endif
 		}
 
@@ -2095,9 +2379,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetMouseDeltaNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[178])();
+			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[186])();
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[178])();
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[186])();
 			#endif
 		}
 
@@ -2115,9 +2399,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetMousePositionNative([NativeName(NativeNameType.Param, "x")] [NativeName(NativeNameType.Type, "int")] int x, [NativeName(NativeNameType.Param, "y")] [NativeName(NativeNameType.Type, "int")] int y)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[179])(x, y);
+			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[187])(x, y);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[179])(x, y);
+			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[187])(x, y);
 			#endif
 		}
 
@@ -2134,9 +2418,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetMouseOffsetNative([NativeName(NativeNameType.Param, "offsetX")] [NativeName(NativeNameType.Type, "int")] int offsetX, [NativeName(NativeNameType.Param, "offsetY")] [NativeName(NativeNameType.Type, "int")] int offsetY)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[180])(offsetX, offsetY);
+			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[188])(offsetX, offsetY);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[180])(offsetX, offsetY);
+			((delegate* unmanaged[Cdecl]<int, int, void>)funcTable[188])(offsetX, offsetY);
 			#endif
 		}
 
@@ -2153,9 +2437,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetMouseScaleNative([NativeName(NativeNameType.Param, "scaleX")] [NativeName(NativeNameType.Type, "float")] float scaleX, [NativeName(NativeNameType.Param, "scaleY")] [NativeName(NativeNameType.Type, "float")] float scaleY)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<float, float, void>)funcTable[181])(scaleX, scaleY);
+			((delegate* unmanaged[Cdecl]<float, float, void>)funcTable[189])(scaleX, scaleY);
 			#else
-			((delegate* unmanaged[Cdecl]<float, float, void>)funcTable[181])(scaleX, scaleY);
+			((delegate* unmanaged[Cdecl]<float, float, void>)funcTable[189])(scaleX, scaleY);
 			#endif
 		}
 
@@ -2172,9 +2456,9 @@ namespace Hexa.NET.Raylib
 		internal static float GetMouseWheelMoveNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<float>)funcTable[182])();
+			return ((delegate* unmanaged[Cdecl]<float>)funcTable[190])();
 			#else
-			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[182])();
+			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[190])();
 			#endif
 		}
 
@@ -2192,9 +2476,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetMouseWheelMoveVNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[183])();
+			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[191])();
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[183])();
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[191])();
 			#endif
 		}
 
@@ -2212,9 +2496,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetMouseCursorNative([NativeName(NativeNameType.Param, "cursor")] [NativeName(NativeNameType.Type, "int")] int cursor)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[184])(cursor);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[192])(cursor);
 			#else
-			((delegate* unmanaged[Cdecl]<int, void>)funcTable[184])(cursor);
+			((delegate* unmanaged[Cdecl]<int, void>)funcTable[192])(cursor);
 			#endif
 		}
 
@@ -2234,9 +2518,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetTouchXNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[185])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[193])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[185])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[193])();
 			#endif
 		}
 
@@ -2257,9 +2541,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetTouchYNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[186])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[194])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[186])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[194])();
 			#endif
 		}
 
@@ -2277,9 +2561,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetTouchPositionNative([NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "int")] int index)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, Vector2>)funcTable[187])(index);
+			return ((delegate* unmanaged[Cdecl]<int, Vector2>)funcTable[195])(index);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<int, Vector2>)funcTable[187])(index);
+			return (Vector2)((delegate* unmanaged[Cdecl]<int, Vector2>)funcTable[195])(index);
 			#endif
 		}
 
@@ -2297,9 +2581,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetTouchPointIdNative([NativeName(NativeNameType.Param, "index")] [NativeName(NativeNameType.Type, "int")] int index)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int>)funcTable[188])(index);
+			return ((delegate* unmanaged[Cdecl]<int, int>)funcTable[196])(index);
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int, int>)funcTable[188])(index);
+			return (int)((delegate* unmanaged[Cdecl]<int, int>)funcTable[196])(index);
 			#endif
 		}
 
@@ -2317,9 +2601,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetTouchPointCountNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[189])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[197])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[189])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[197])();
 			#endif
 		}
 
@@ -2342,9 +2626,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetGesturesEnabledNative([NativeName(NativeNameType.Param, "flags")] [NativeName(NativeNameType.Type, "unsigned int")] uint flags)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[190])(flags);
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[198])(flags);
 			#else
-			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[190])(flags);
+			((delegate* unmanaged[Cdecl]<uint, void>)funcTable[198])(flags);
 			#endif
 		}
 
@@ -2366,9 +2650,9 @@ namespace Hexa.NET.Raylib
 		internal static byte IsGestureDetectedNative([NativeName(NativeNameType.Param, "gesture")] [NativeName(NativeNameType.Type, "unsigned int")] uint gesture)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<uint, byte>)funcTable[191])(gesture);
+			return ((delegate* unmanaged[Cdecl]<uint, byte>)funcTable[199])(gesture);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<uint, byte>)funcTable[191])(gesture);
+			return (byte)((delegate* unmanaged[Cdecl]<uint, byte>)funcTable[199])(gesture);
 			#endif
 		}
 
@@ -2386,9 +2670,9 @@ namespace Hexa.NET.Raylib
 		internal static int GetGestureDetectedNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int>)funcTable[192])();
+			return ((delegate* unmanaged[Cdecl]<int>)funcTable[200])();
 			#else
-			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[192])();
+			return (int)((delegate* unmanaged[Cdecl]<int>)funcTable[200])();
 			#endif
 		}
 
@@ -2406,9 +2690,9 @@ namespace Hexa.NET.Raylib
 		internal static float GetGestureHoldDurationNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<float>)funcTable[193])();
+			return ((delegate* unmanaged[Cdecl]<float>)funcTable[201])();
 			#else
-			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[193])();
+			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[201])();
 			#endif
 		}
 
@@ -2426,9 +2710,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetGestureDragVectorNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[194])();
+			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[202])();
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[194])();
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[202])();
 			#endif
 		}
 
@@ -2446,9 +2730,9 @@ namespace Hexa.NET.Raylib
 		internal static float GetGestureDragAngleNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<float>)funcTable[195])();
+			return ((delegate* unmanaged[Cdecl]<float>)funcTable[203])();
 			#else
-			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[195])();
+			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[203])();
 			#endif
 		}
 
@@ -2466,9 +2750,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetGesturePinchVectorNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[196])();
+			return ((delegate* unmanaged[Cdecl]<Vector2>)funcTable[204])();
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[196])();
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2>)funcTable[204])();
 			#endif
 		}
 
@@ -2486,9 +2770,9 @@ namespace Hexa.NET.Raylib
 		internal static float GetGesturePinchAngleNative()
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<float>)funcTable[197])();
+			return ((delegate* unmanaged[Cdecl]<float>)funcTable[205])();
 			#else
-			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[197])();
+			return (float)((delegate* unmanaged[Cdecl]<float>)funcTable[205])();
 			#endif
 		}
 
@@ -2511,9 +2795,9 @@ namespace Hexa.NET.Raylib
 		internal static void UpdateCameraNative([NativeName(NativeNameType.Param, "camera")] [NativeName(NativeNameType.Type, "Camera *")] Camera3D* camera, [NativeName(NativeNameType.Param, "mode")] [NativeName(NativeNameType.Type, "int")] int mode)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Camera3D*, int, void>)funcTable[198])(camera, mode);
+			((delegate* unmanaged[Cdecl]<Camera3D*, int, void>)funcTable[206])(camera, mode);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, void>)funcTable[198])((nint)camera, mode);
+			((delegate* unmanaged[Cdecl]<nint, int, void>)funcTable[206])((nint)camera, mode);
 			#endif
 		}
 
@@ -2550,9 +2834,9 @@ namespace Hexa.NET.Raylib
 		internal static void UpdateCameraProNative([NativeName(NativeNameType.Param, "camera")] [NativeName(NativeNameType.Type, "Camera *")] Camera3D* camera, [NativeName(NativeNameType.Param, "movement")] [NativeName(NativeNameType.Type, "Vector3")] Vector3 movement, [NativeName(NativeNameType.Param, "rotation")] [NativeName(NativeNameType.Type, "Vector3")] Vector3 rotation, [NativeName(NativeNameType.Param, "zoom")] [NativeName(NativeNameType.Type, "float")] float zoom)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Camera3D*, Vector3, Vector3, float, void>)funcTable[199])(camera, movement, rotation, zoom);
+			((delegate* unmanaged[Cdecl]<Camera3D*, Vector3, Vector3, float, void>)funcTable[207])(camera, movement, rotation, zoom);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, float, void>)funcTable[199])((nint)camera, movement, rotation, zoom);
+			((delegate* unmanaged[Cdecl]<nint, Vector3, Vector3, float, void>)funcTable[207])((nint)camera, movement, rotation, zoom);
 			#endif
 		}
 
@@ -2587,9 +2871,9 @@ namespace Hexa.NET.Raylib
 		internal static void SetShapesTextureNative([NativeName(NativeNameType.Param, "texture")] [NativeName(NativeNameType.Type, "Texture2D")] Texture texture, [NativeName(NativeNameType.Param, "source")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle source)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Texture, Rectangle, void>)funcTable[200])(texture, source);
+			((delegate* unmanaged[Cdecl]<Texture, Rectangle, void>)funcTable[208])(texture, source);
 			#else
-			((delegate* unmanaged[Cdecl]<Texture, Rectangle, void>)funcTable[200])(texture, source);
+			((delegate* unmanaged[Cdecl]<Texture, Rectangle, void>)funcTable[208])(texture, source);
 			#endif
 		}
 
@@ -2608,6 +2892,46 @@ namespace Hexa.NET.Raylib
 			SetShapesTextureNative(texture, source);
 		}
 
+		[NativeName(NativeNameType.Func, "GetShapesTexture")]
+		[return: NativeName(NativeNameType.Type, "Texture2D")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Texture GetShapesTextureNative()
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Texture>)funcTable[209])();
+			#else
+			return (Texture)((delegate* unmanaged[Cdecl]<Texture>)funcTable[209])();
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "GetShapesTexture")]
+		[return: NativeName(NativeNameType.Type, "Texture2D")]
+		public static Texture GetShapesTexture()
+		{
+			Texture ret = GetShapesTextureNative();
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "GetShapesTextureRectangle")]
+		[return: NativeName(NativeNameType.Type, "Rectangle")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Rectangle GetShapesTextureRectangleNative()
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Rectangle>)funcTable[210])();
+			#else
+			return (Rectangle)((delegate* unmanaged[Cdecl]<Rectangle>)funcTable[210])();
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "GetShapesTextureRectangle")]
+		[return: NativeName(NativeNameType.Type, "Rectangle")]
+		public static Rectangle GetShapesTextureRectangle()
+		{
+			Rectangle ret = GetShapesTextureRectangleNative();
+			return ret;
+		}
+
 		/// <summary>
 		/// Basic shapes drawing functions<br/>
 		/// </summary>
@@ -2617,9 +2941,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawPixelNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, Color, void>)funcTable[201])(posX, posY, color);
+			((delegate* unmanaged[Cdecl]<int, int, Color, void>)funcTable[211])(posX, posY, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, Color, void>)funcTable[201])(posX, posY, color);
+			((delegate* unmanaged[Cdecl]<int, int, Color, void>)funcTable[211])(posX, posY, color);
 			#endif
 		}
 
@@ -2639,9 +2963,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawPixelVNative([NativeName(NativeNameType.Param, "position")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 position, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Color, void>)funcTable[202])(position, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Color, void>)funcTable[212])(position, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Color, void>)funcTable[202])(position, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Color, void>)funcTable[212])(position, color);
 			#endif
 		}
 
@@ -2658,9 +2982,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawLineNative([NativeName(NativeNameType.Param, "startPosX")] [NativeName(NativeNameType.Type, "int")] int startPosX, [NativeName(NativeNameType.Param, "startPosY")] [NativeName(NativeNameType.Type, "int")] int startPosY, [NativeName(NativeNameType.Param, "endPosX")] [NativeName(NativeNameType.Type, "int")] int endPosX, [NativeName(NativeNameType.Param, "endPosY")] [NativeName(NativeNameType.Type, "int")] int endPosY, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[203])(startPosX, startPosY, endPosX, endPosY, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[213])(startPosX, startPosY, endPosX, endPosY, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[203])(startPosX, startPosY, endPosX, endPosY, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[213])(startPosX, startPosY, endPosX, endPosY, color);
 			#endif
 		}
 
@@ -2677,9 +3001,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawLineVNative([NativeName(NativeNameType.Param, "startPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos, [NativeName(NativeNameType.Param, "endPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[204])(startPos, endPos, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[214])(startPos, endPos, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[204])(startPos, endPos, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[214])(startPos, endPos, color);
 			#endif
 		}
 
@@ -2696,9 +3020,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawLineExNative([NativeName(NativeNameType.Param, "startPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos, [NativeName(NativeNameType.Param, "endPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[205])(startPos, endPos, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[215])(startPos, endPos, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[205])(startPos, endPos, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[215])(startPos, endPos, thick, color);
 			#endif
 		}
 
@@ -2712,25 +3036,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawLineStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawLineStripNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawLineStripNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[206])(points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[216])(points, pointCount, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[206])((nint)points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[216])((nint)points, pointCount, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawLineStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawLineStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawLineStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawLineStripNative(points, pointCount, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawLineStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawLineStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawLineStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -2744,9 +3068,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawLineBezierNative([NativeName(NativeNameType.Param, "startPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos, [NativeName(NativeNameType.Param, "endPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[207])(startPos, endPos, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[217])(startPos, endPos, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[207])(startPos, endPos, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[217])(startPos, endPos, thick, color);
 			#endif
 		}
 
@@ -2763,9 +3087,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[208])(centerX, centerY, radius, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[218])(centerX, centerY, radius, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[208])(centerX, centerY, radius, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[218])(centerX, centerY, radius, color);
 			#endif
 		}
 
@@ -2782,9 +3106,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleSectorNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "startAngle")] [NativeName(NativeNameType.Type, "float")] float startAngle, [NativeName(NativeNameType.Param, "endAngle")] [NativeName(NativeNameType.Type, "float")] float endAngle, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[209])(center, radius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[219])(center, radius, startAngle, endAngle, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[209])(center, radius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[219])(center, radius, startAngle, endAngle, segments, color);
 			#endif
 		}
 
@@ -2801,9 +3125,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleSectorLinesNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "startAngle")] [NativeName(NativeNameType.Type, "float")] float startAngle, [NativeName(NativeNameType.Param, "endAngle")] [NativeName(NativeNameType.Type, "float")] float endAngle, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[210])(center, radius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[220])(center, radius, startAngle, endAngle, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[210])(center, radius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, int, Color, void>)funcTable[220])(center, radius, startAngle, endAngle, segments, color);
 			#endif
 		}
 
@@ -2817,20 +3141,20 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawCircleGradient")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawCircleGradientNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		internal static void DrawCircleGradientNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, void>)funcTable[211])(centerX, centerY, radius, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, void>)funcTable[221])(centerX, centerY, radius, inner, outer);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, void>)funcTable[211])(centerX, centerY, radius, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, void>)funcTable[221])(centerX, centerY, radius, inner, outer);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawCircleGradient")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawCircleGradient([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		public static void DrawCircleGradient([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
 		{
-			DrawCircleGradientNative(centerX, centerY, radius, color1, color2);
+			DrawCircleGradientNative(centerX, centerY, radius, inner, outer);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawCircleV")]
@@ -2839,9 +3163,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleVNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[212])(center, radius, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[222])(center, radius, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[212])(center, radius, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[222])(center, radius, color);
 			#endif
 		}
 
@@ -2858,9 +3182,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleLinesNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[213])(centerX, centerY, radius, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[223])(centerX, centerY, radius, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[213])(centerX, centerY, radius, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, Color, void>)funcTable[223])(centerX, centerY, radius, color);
 			#endif
 		}
 
@@ -2877,9 +3201,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawCircleLinesVNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[214])(center, radius, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[224])(center, radius, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[214])(center, radius, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, Color, void>)funcTable[224])(center, radius, color);
 			#endif
 		}
 
@@ -2896,9 +3220,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawEllipseNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radiusH")] [NativeName(NativeNameType.Type, "float")] float radiusH, [NativeName(NativeNameType.Param, "radiusV")] [NativeName(NativeNameType.Type, "float")] float radiusV, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[215])(centerX, centerY, radiusH, radiusV, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[225])(centerX, centerY, radiusH, radiusV, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[215])(centerX, centerY, radiusH, radiusV, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[225])(centerX, centerY, radiusH, radiusV, color);
 			#endif
 		}
 
@@ -2915,9 +3239,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawEllipseLinesNative([NativeName(NativeNameType.Param, "centerX")] [NativeName(NativeNameType.Type, "int")] int centerX, [NativeName(NativeNameType.Param, "centerY")] [NativeName(NativeNameType.Type, "int")] int centerY, [NativeName(NativeNameType.Param, "radiusH")] [NativeName(NativeNameType.Type, "float")] float radiusH, [NativeName(NativeNameType.Param, "radiusV")] [NativeName(NativeNameType.Type, "float")] float radiusV, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[216])(centerX, centerY, radiusH, radiusV, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[226])(centerX, centerY, radiusH, radiusV, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[216])(centerX, centerY, radiusH, radiusV, color);
+			((delegate* unmanaged[Cdecl]<int, int, float, float, Color, void>)funcTable[226])(centerX, centerY, radiusH, radiusV, color);
 			#endif
 		}
 
@@ -2934,9 +3258,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRingNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "innerRadius")] [NativeName(NativeNameType.Type, "float")] float innerRadius, [NativeName(NativeNameType.Param, "outerRadius")] [NativeName(NativeNameType.Type, "float")] float outerRadius, [NativeName(NativeNameType.Param, "startAngle")] [NativeName(NativeNameType.Type, "float")] float startAngle, [NativeName(NativeNameType.Param, "endAngle")] [NativeName(NativeNameType.Type, "float")] float endAngle, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[217])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[227])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[217])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[227])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 			#endif
 		}
 
@@ -2953,9 +3277,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRingLinesNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "innerRadius")] [NativeName(NativeNameType.Type, "float")] float innerRadius, [NativeName(NativeNameType.Param, "outerRadius")] [NativeName(NativeNameType.Type, "float")] float outerRadius, [NativeName(NativeNameType.Param, "startAngle")] [NativeName(NativeNameType.Type, "float")] float startAngle, [NativeName(NativeNameType.Param, "endAngle")] [NativeName(NativeNameType.Type, "float")] float endAngle, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[218])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[228])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[218])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
+			((delegate* unmanaged[Cdecl]<Vector2, float, float, float, float, int, Color, void>)funcTable[228])(center, innerRadius, outerRadius, startAngle, endAngle, segments, color);
 			#endif
 		}
 
@@ -2972,9 +3296,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[219])(posX, posY, width, height, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[229])(posX, posY, width, height, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[219])(posX, posY, width, height, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[229])(posX, posY, width, height, color);
 			#endif
 		}
 
@@ -2991,9 +3315,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleVNative([NativeName(NativeNameType.Param, "position")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 position, [NativeName(NativeNameType.Param, "size")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 size, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[220])(position, size, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[230])(position, size, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[220])(position, size, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Color, void>)funcTable[230])(position, size, color);
 			#endif
 		}
 
@@ -3010,9 +3334,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleRecNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, Color, void>)funcTable[221])(rec, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, Color, void>)funcTable[231])(rec, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, Color, void>)funcTable[221])(rec, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, Color, void>)funcTable[231])(rec, color);
 			#endif
 		}
 
@@ -3029,9 +3353,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleProNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "origin")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 origin, [NativeName(NativeNameType.Param, "rotation")] [NativeName(NativeNameType.Type, "float")] float rotation, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, Vector2, float, Color, void>)funcTable[222])(rec, origin, rotation, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, Vector2, float, Color, void>)funcTable[232])(rec, origin, rotation, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, Vector2, float, Color, void>)funcTable[222])(rec, origin, rotation, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, Vector2, float, Color, void>)funcTable[232])(rec, origin, rotation, color);
 			#endif
 		}
 
@@ -3045,58 +3369,58 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientV")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawRectangleGradientVNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		internal static void DrawRectangleGradientVNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "top")] [NativeName(NativeNameType.Type, "Color")] Color top, [NativeName(NativeNameType.Param, "bottom")] [NativeName(NativeNameType.Type, "Color")] Color bottom)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[223])(posX, posY, width, height, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[233])(posX, posY, width, height, top, bottom);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[223])(posX, posY, width, height, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[233])(posX, posY, width, height, top, bottom);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientV")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawRectangleGradientV([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		public static void DrawRectangleGradientV([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "top")] [NativeName(NativeNameType.Type, "Color")] Color top, [NativeName(NativeNameType.Param, "bottom")] [NativeName(NativeNameType.Type, "Color")] Color bottom)
 		{
-			DrawRectangleGradientVNative(posX, posY, width, height, color1, color2);
+			DrawRectangleGradientVNative(posX, posY, width, height, top, bottom);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientH")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawRectangleGradientHNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		internal static void DrawRectangleGradientHNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "left")] [NativeName(NativeNameType.Type, "Color")] Color left, [NativeName(NativeNameType.Param, "right")] [NativeName(NativeNameType.Type, "Color")] Color right)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[224])(posX, posY, width, height, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[234])(posX, posY, width, height, left, right);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[224])(posX, posY, width, height, color1, color2);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, void>)funcTable[234])(posX, posY, width, height, left, right);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientH")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawRectangleGradientH([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color1")] [NativeName(NativeNameType.Type, "Color")] Color color1, [NativeName(NativeNameType.Param, "color2")] [NativeName(NativeNameType.Type, "Color")] Color color2)
+		public static void DrawRectangleGradientH([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "left")] [NativeName(NativeNameType.Type, "Color")] Color left, [NativeName(NativeNameType.Param, "right")] [NativeName(NativeNameType.Type, "Color")] Color right)
 		{
-			DrawRectangleGradientHNative(posX, posY, width, height, color1, color2);
+			DrawRectangleGradientHNative(posX, posY, width, height, left, right);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientEx")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawRectangleGradientExNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "col1")] [NativeName(NativeNameType.Type, "Color")] Color col1, [NativeName(NativeNameType.Param, "col2")] [NativeName(NativeNameType.Type, "Color")] Color col2, [NativeName(NativeNameType.Param, "col3")] [NativeName(NativeNameType.Type, "Color")] Color col3, [NativeName(NativeNameType.Param, "col4")] [NativeName(NativeNameType.Type, "Color")] Color col4)
+		internal static void DrawRectangleGradientExNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "topLeft")] [NativeName(NativeNameType.Type, "Color")] Color topLeft, [NativeName(NativeNameType.Param, "bottomLeft")] [NativeName(NativeNameType.Type, "Color")] Color bottomLeft, [NativeName(NativeNameType.Param, "topRight")] [NativeName(NativeNameType.Type, "Color")] Color topRight, [NativeName(NativeNameType.Param, "bottomRight")] [NativeName(NativeNameType.Type, "Color")] Color bottomRight)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, Color, Color, Color, Color, void>)funcTable[225])(rec, col1, col2, col3, col4);
+			((delegate* unmanaged[Cdecl]<Rectangle, Color, Color, Color, Color, void>)funcTable[235])(rec, topLeft, bottomLeft, topRight, bottomRight);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, Color, Color, Color, Color, void>)funcTable[225])(rec, col1, col2, col3, col4);
+			((delegate* unmanaged[Cdecl]<Rectangle, Color, Color, Color, Color, void>)funcTable[235])(rec, topLeft, bottomLeft, topRight, bottomRight);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleGradientEx")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawRectangleGradientEx([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "col1")] [NativeName(NativeNameType.Type, "Color")] Color col1, [NativeName(NativeNameType.Param, "col2")] [NativeName(NativeNameType.Type, "Color")] Color col2, [NativeName(NativeNameType.Param, "col3")] [NativeName(NativeNameType.Type, "Color")] Color col3, [NativeName(NativeNameType.Param, "col4")] [NativeName(NativeNameType.Type, "Color")] Color col4)
+		public static void DrawRectangleGradientEx([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "topLeft")] [NativeName(NativeNameType.Type, "Color")] Color topLeft, [NativeName(NativeNameType.Param, "bottomLeft")] [NativeName(NativeNameType.Type, "Color")] Color bottomLeft, [NativeName(NativeNameType.Param, "topRight")] [NativeName(NativeNameType.Type, "Color")] Color topRight, [NativeName(NativeNameType.Param, "bottomRight")] [NativeName(NativeNameType.Type, "Color")] Color bottomRight)
 		{
-			DrawRectangleGradientExNative(rec, col1, col2, col3, col4);
+			DrawRectangleGradientExNative(rec, topLeft, bottomLeft, topRight, bottomRight);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleLines")]
@@ -3105,9 +3429,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleLinesNative([NativeName(NativeNameType.Param, "posX")] [NativeName(NativeNameType.Type, "int")] int posX, [NativeName(NativeNameType.Param, "posY")] [NativeName(NativeNameType.Type, "int")] int posY, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[226])(posX, posY, width, height, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[236])(posX, posY, width, height, color);
 			#else
-			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[226])(posX, posY, width, height, color);
+			((delegate* unmanaged[Cdecl]<int, int, int, int, Color, void>)funcTable[236])(posX, posY, width, height, color);
 			#endif
 		}
 
@@ -3124,9 +3448,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleLinesExNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, float, Color, void>)funcTable[227])(rec, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, Color, void>)funcTable[237])(rec, lineThick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, float, Color, void>)funcTable[227])(rec, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, Color, void>)funcTable[237])(rec, lineThick, color);
 			#endif
 		}
 
@@ -3143,9 +3467,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawRectangleRoundedNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[228])(rec, roundness, segments, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[238])(rec, roundness, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[228])(rec, roundness, segments, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[238])(rec, roundness, segments, color);
 			#endif
 		}
 
@@ -3159,20 +3483,39 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawRectangleRoundedLines")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawRectangleRoundedLinesNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawRectangleRoundedLinesNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Rectangle, float, int, float, Color, void>)funcTable[229])(rec, roundness, segments, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[239])(rec, roundness, segments, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Rectangle, float, int, float, Color, void>)funcTable[229])(rec, roundness, segments, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, Color, void>)funcTable[239])(rec, roundness, segments, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawRectangleRoundedLines")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawRectangleRoundedLines([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawRectangleRoundedLines([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
-			DrawRectangleRoundedLinesNative(rec, roundness, segments, lineThick, color);
+			DrawRectangleRoundedLinesNative(rec, roundness, segments, color);
+		}
+
+		[NativeName(NativeNameType.Func, "DrawRectangleRoundedLinesEx")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static void DrawRectangleRoundedLinesExNative([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		{
+			#if NET5_0_OR_GREATER
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, float, Color, void>)funcTable[240])(rec, roundness, segments, lineThick, color);
+			#else
+			((delegate* unmanaged[Cdecl]<Rectangle, float, int, float, Color, void>)funcTable[240])(rec, roundness, segments, lineThick, color);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "DrawRectangleRoundedLinesEx")]
+		[return: NativeName(NativeNameType.Type, "void")]
+		public static void DrawRectangleRoundedLinesEx([NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec, [NativeName(NativeNameType.Param, "roundness")] [NativeName(NativeNameType.Type, "float")] float roundness, [NativeName(NativeNameType.Param, "segments")] [NativeName(NativeNameType.Type, "int")] int segments, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		{
+			DrawRectangleRoundedLinesExNative(rec, roundness, segments, lineThick, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawTriangle")]
@@ -3181,9 +3524,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawTriangleNative([NativeName(NativeNameType.Param, "v1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v1, [NativeName(NativeNameType.Param, "v2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v2, [NativeName(NativeNameType.Param, "v3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v3, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[230])(v1, v2, v3, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[241])(v1, v2, v3, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[230])(v1, v2, v3, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[241])(v1, v2, v3, color);
 			#endif
 		}
 
@@ -3200,9 +3543,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawTriangleLinesNative([NativeName(NativeNameType.Param, "v1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v1, [NativeName(NativeNameType.Param, "v2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v2, [NativeName(NativeNameType.Param, "v3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 v3, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[231])(v1, v2, v3, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[242])(v1, v2, v3, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[231])(v1, v2, v3, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Color, void>)funcTable[242])(v1, v2, v3, color);
 			#endif
 		}
 
@@ -3216,25 +3559,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawTriangleFan")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawTriangleFanNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawTriangleFanNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[232])(points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[243])(points, pointCount, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[232])((nint)points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[243])((nint)points, pointCount, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawTriangleFan")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawTriangleFan([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawTriangleFan([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawTriangleFanNative(points, pointCount, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawTriangleFan")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawTriangleFan([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawTriangleFan([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3245,25 +3588,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawTriangleStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawTriangleStripNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawTriangleStripNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[233])(points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, Color, void>)funcTable[244])(points, pointCount, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[233])((nint)points, pointCount, color);
+			((delegate* unmanaged[Cdecl]<nint, int, Color, void>)funcTable[244])((nint)points, pointCount, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawTriangleStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawTriangleStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawTriangleStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawTriangleStripNative(points, pointCount, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawTriangleStrip")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawTriangleStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawTriangleStrip([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3277,9 +3620,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawPolyNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "sides")] [NativeName(NativeNameType.Type, "int")] int sides, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "rotation")] [NativeName(NativeNameType.Type, "float")] float rotation, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[234])(center, sides, radius, rotation, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[245])(center, sides, radius, rotation, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[234])(center, sides, radius, rotation, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[245])(center, sides, radius, rotation, color);
 			#endif
 		}
 
@@ -3296,9 +3639,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawPolyLinesNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "sides")] [NativeName(NativeNameType.Type, "int")] int sides, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "rotation")] [NativeName(NativeNameType.Type, "float")] float rotation, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[235])(center, sides, radius, rotation, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[246])(center, sides, radius, rotation, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[235])(center, sides, radius, rotation, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, Color, void>)funcTable[246])(center, sides, radius, rotation, color);
 			#endif
 		}
 
@@ -3315,9 +3658,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawPolyLinesExNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "sides")] [NativeName(NativeNameType.Type, "int")] int sides, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "rotation")] [NativeName(NativeNameType.Type, "float")] float rotation, [NativeName(NativeNameType.Param, "lineThick")] [NativeName(NativeNameType.Type, "float")] float lineThick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, float, Color, void>)funcTable[236])(center, sides, radius, rotation, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, float, Color, void>)funcTable[247])(center, sides, radius, rotation, lineThick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, float, Color, void>)funcTable[236])(center, sides, radius, rotation, lineThick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, int, float, float, float, Color, void>)funcTable[247])(center, sides, radius, rotation, lineThick, color);
 			#endif
 		}
 
@@ -3334,12 +3677,12 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawSplineLinear")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawSplineLinearNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawSplineLinearNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[237])(points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[248])(points, pointCount, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[237])((nint)points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[248])((nint)points, pointCount, thick, color);
 			#endif
 		}
 
@@ -3348,7 +3691,7 @@ namespace Hexa.NET.Raylib
 		/// </summary>
 		[NativeName(NativeNameType.Func, "DrawSplineLinear")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineLinear([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineLinear([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawSplineLinearNative(points, pointCount, thick, color);
 		}
@@ -3358,7 +3701,7 @@ namespace Hexa.NET.Raylib
 		/// </summary>
 		[NativeName(NativeNameType.Func, "DrawSplineLinear")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineLinear([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineLinear([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3369,25 +3712,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawSplineBasis")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawSplineBasisNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawSplineBasisNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[238])(points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[249])(points, pointCount, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[238])((nint)points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[249])((nint)points, pointCount, thick, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBasis")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBasis([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBasis([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawSplineBasisNative(points, pointCount, thick, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBasis")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBasis([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBasis([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3398,25 +3741,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawSplineCatmullRom")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawSplineCatmullRomNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawSplineCatmullRomNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[239])(points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[250])(points, pointCount, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[239])((nint)points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[250])((nint)points, pointCount, thick, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineCatmullRom")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineCatmullRom([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineCatmullRom([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawSplineCatmullRomNative(points, pointCount, thick, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineCatmullRom")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineCatmullRom([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineCatmullRom([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3427,25 +3770,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawSplineBezierQuadratic")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawSplineBezierQuadraticNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawSplineBezierQuadraticNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[240])(points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[251])(points, pointCount, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[240])((nint)points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[251])((nint)points, pointCount, thick, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBezierQuadratic")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBezierQuadratic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBezierQuadratic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawSplineBezierQuadraticNative(points, pointCount, thick, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBezierQuadratic")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBezierQuadratic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBezierQuadratic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3456,25 +3799,25 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Func, "DrawSplineBezierCubic")]
 		[return: NativeName(NativeNameType.Type, "void")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void DrawSplineBezierCubicNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		internal static void DrawSplineBezierCubicNative([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[241])(points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2*, int, float, Color, void>)funcTable[252])(points, pointCount, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[241])((nint)points, pointCount, thick, color);
+			((delegate* unmanaged[Cdecl]<nint, int, float, Color, void>)funcTable[252])((nint)points, pointCount, thick, color);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBezierCubic")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBezierCubic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBezierCubic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			DrawSplineBezierCubicNative(points, pointCount, thick, color);
 		}
 
 		[NativeName(NativeNameType.Func, "DrawSplineBezierCubic")]
 		[return: NativeName(NativeNameType.Type, "void")]
-		public static void DrawSplineBezierCubic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
+		public static void DrawSplineBezierCubic([NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3488,9 +3831,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawSplineSegmentLinearNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[242])(p1, p2, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[253])(p1, p2, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[242])(p1, p2, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Color, void>)funcTable[253])(p1, p2, thick, color);
 			#endif
 		}
 
@@ -3507,9 +3850,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawSplineSegmentBasisNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[243])(p1, p2, p3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[254])(p1, p2, p3, p4, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[243])(p1, p2, p3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[254])(p1, p2, p3, p4, thick, color);
 			#endif
 		}
 
@@ -3526,9 +3869,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawSplineSegmentCatmullRomNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[244])(p1, p2, p3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[255])(p1, p2, p3, p4, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[244])(p1, p2, p3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[255])(p1, p2, p3, p4, thick, color);
 			#endif
 		}
 
@@ -3545,9 +3888,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawSplineSegmentBezierQuadraticNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "c2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Color, void>)funcTable[245])(p1, c2, p3, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Color, void>)funcTable[256])(p1, c2, p3, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Color, void>)funcTable[245])(p1, c2, p3, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Color, void>)funcTable[256])(p1, c2, p3, thick, color);
 			#endif
 		}
 
@@ -3564,9 +3907,9 @@ namespace Hexa.NET.Raylib
 		internal static void DrawSplineSegmentBezierCubicNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "c2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c2, [NativeName(NativeNameType.Param, "c3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "thick")] [NativeName(NativeNameType.Type, "float")] float thick, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
 		{
 			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[246])(p1, c2, c3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[257])(p1, c2, c3, p4, thick, color);
 			#else
-			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[246])(p1, c2, c3, p4, thick, color);
+			((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Color, void>)funcTable[257])(p1, c2, c3, p4, thick, color);
 			#endif
 		}
 
@@ -3586,9 +3929,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetSplinePointLinearNative([NativeName(NativeNameType.Param, "startPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos, [NativeName(NativeNameType.Param, "endPos")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos, [NativeName(NativeNameType.Param, "t")] [NativeName(NativeNameType.Type, "float")] float t)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Vector2>)funcTable[247])(startPos, endPos, t);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Vector2>)funcTable[258])(startPos, endPos, t);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Vector2>)funcTable[247])(startPos, endPos, t);
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, Vector2>)funcTable[258])(startPos, endPos, t);
 			#endif
 		}
 
@@ -3609,9 +3952,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetSplinePointBasisNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "t")] [NativeName(NativeNameType.Type, "float")] float t)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[248])(p1, p2, p3, p4, t);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[259])(p1, p2, p3, p4, t);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[248])(p1, p2, p3, p4, t);
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[259])(p1, p2, p3, p4, t);
 			#endif
 		}
 
@@ -3629,9 +3972,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetSplinePointCatmullRomNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "t")] [NativeName(NativeNameType.Type, "float")] float t)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[249])(p1, p2, p3, p4, t);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[260])(p1, p2, p3, p4, t);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[249])(p1, p2, p3, p4, t);
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[260])(p1, p2, p3, p4, t);
 			#endif
 		}
 
@@ -3649,9 +3992,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetSplinePointBezierQuadNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "c2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3, [NativeName(NativeNameType.Param, "t")] [NativeName(NativeNameType.Type, "float")] float t)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Vector2>)funcTable[250])(p1, c2, p3, t);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Vector2>)funcTable[261])(p1, c2, p3, t);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Vector2>)funcTable[250])(p1, c2, p3, t);
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, float, Vector2>)funcTable[261])(p1, c2, p3, t);
 			#endif
 		}
 
@@ -3669,9 +4012,9 @@ namespace Hexa.NET.Raylib
 		internal static Vector2 GetSplinePointBezierCubicNative([NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "c2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c2, [NativeName(NativeNameType.Param, "c3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 c3, [NativeName(NativeNameType.Param, "p4")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p4, [NativeName(NativeNameType.Param, "t")] [NativeName(NativeNameType.Type, "float")] float t)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[251])(p1, c2, c3, p4, t);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[262])(p1, c2, c3, p4, t);
 			#else
-			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[251])(p1, c2, c3, p4, t);
+			return (Vector2)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, float, Vector2>)funcTable[262])(p1, c2, c3, p4, t);
 			#endif
 		}
 
@@ -3692,9 +4035,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionRecsNative([NativeName(NativeNameType.Param, "rec1")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec1, [NativeName(NativeNameType.Param, "rec2")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec2)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, byte>)funcTable[252])(rec1, rec2);
+			return ((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, byte>)funcTable[263])(rec1, rec2);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, byte>)funcTable[252])(rec1, rec2);
+			return (byte)((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, byte>)funcTable[263])(rec1, rec2);
 			#endif
 		}
 
@@ -3715,9 +4058,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionCirclesNative([NativeName(NativeNameType.Param, "center1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center1, [NativeName(NativeNameType.Param, "radius1")] [NativeName(NativeNameType.Type, "float")] float radius1, [NativeName(NativeNameType.Param, "center2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center2, [NativeName(NativeNameType.Param, "radius2")] [NativeName(NativeNameType.Type, "float")] float radius2)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, float, byte>)funcTable[253])(center1, radius1, center2, radius2);
+			return ((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, float, byte>)funcTable[264])(center1, radius1, center2, radius2);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, float, byte>)funcTable[253])(center1, radius1, center2, radius2);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, float, byte>)funcTable[264])(center1, radius1, center2, radius2);
 			#endif
 		}
 
@@ -3735,9 +4078,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionCircleRecNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, float, Rectangle, byte>)funcTable[254])(center, radius, rec);
+			return ((delegate* unmanaged[Cdecl]<Vector2, float, Rectangle, byte>)funcTable[265])(center, radius, rec);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, float, Rectangle, byte>)funcTable[254])(center, radius, rec);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, float, Rectangle, byte>)funcTable[265])(center, radius, rec);
 			#endif
 		}
 
@@ -3749,15 +4092,35 @@ namespace Hexa.NET.Raylib
 			return ret != 0;
 		}
 
+		[NativeName(NativeNameType.Func, "CheckCollisionCircleLine")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static byte CheckCollisionCircleLineNative([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, Vector2, byte>)funcTable[266])(center, radius, p1, p2);
+			#else
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, float, Vector2, Vector2, byte>)funcTable[266])(center, radius, p1, p2);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "CheckCollisionCircleLine")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool CheckCollisionCircleLine([NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2)
+		{
+			byte ret = CheckCollisionCircleLineNative(center, radius, p1, p2);
+			return ret != 0;
+		}
+
 		[NativeName(NativeNameType.Func, "CheckCollisionPointRec")]
 		[return: NativeName(NativeNameType.Type, "bool")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static byte CheckCollisionPointRecNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "rec")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Rectangle, byte>)funcTable[255])(point, rec);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Rectangle, byte>)funcTable[267])(point, rec);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Rectangle, byte>)funcTable[255])(point, rec);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Rectangle, byte>)funcTable[267])(point, rec);
 			#endif
 		}
 
@@ -3775,9 +4138,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionPointCircleNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "center")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 center, [NativeName(NativeNameType.Param, "radius")] [NativeName(NativeNameType.Type, "float")] float radius)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, byte>)funcTable[256])(point, center, radius);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, byte>)funcTable[268])(point, center, radius);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, byte>)funcTable[256])(point, center, radius);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, float, byte>)funcTable[268])(point, center, radius);
 			#endif
 		}
 
@@ -3795,9 +4158,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionPointTriangleNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "p3")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p3)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, byte>)funcTable[257])(point, p1, p2, p3);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, byte>)funcTable[269])(point, p1, p2, p3);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, byte>)funcTable[257])(point, p1, p2, p3);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, byte>)funcTable[269])(point, p1, p2, p3);
 			#endif
 		}
 
@@ -3809,21 +4172,41 @@ namespace Hexa.NET.Raylib
 			return ret != 0;
 		}
 
+		[NativeName(NativeNameType.Func, "CheckCollisionPointLine")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static byte CheckCollisionPointLineNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "threshold")] [NativeName(NativeNameType.Type, "int")] int threshold)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, int, byte>)funcTable[270])(point, p1, p2, threshold);
+			#else
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, int, byte>)funcTable[270])(point, p1, p2, threshold);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "CheckCollisionPointLine")]
+		[return: NativeName(NativeNameType.Type, "bool")]
+		public static bool CheckCollisionPointLine([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "threshold")] [NativeName(NativeNameType.Type, "int")] int threshold)
+		{
+			byte ret = CheckCollisionPointLineNative(point, p1, p2, threshold);
+			return ret != 0;
+		}
+
 		[NativeName(NativeNameType.Func, "CheckCollisionPointPoly")]
 		[return: NativeName(NativeNameType.Type, "bool")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte CheckCollisionPointPolyNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
+		internal static byte CheckCollisionPointPolyNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2*, int, byte>)funcTable[258])(point, points, pointCount);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2*, int, byte>)funcTable[271])(point, points, pointCount);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, nint, int, byte>)funcTable[258])(point, (nint)points, pointCount);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, nint, int, byte>)funcTable[271])(point, (nint)points, pointCount);
 			#endif
 		}
 
 		[NativeName(NativeNameType.Func, "CheckCollisionPointPoly")]
 		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool CheckCollisionPointPoly([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
+		public static bool CheckCollisionPointPoly([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] Vector2* points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
 		{
 			byte ret = CheckCollisionPointPolyNative(point, points, pointCount);
 			return ret != 0;
@@ -3831,7 +4214,7 @@ namespace Hexa.NET.Raylib
 
 		[NativeName(NativeNameType.Func, "CheckCollisionPointPoly")]
 		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool CheckCollisionPointPoly([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
+		public static bool CheckCollisionPointPoly([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "points")] [NativeName(NativeNameType.Type, "Vector2 const *")] ref Vector2 points, [NativeName(NativeNameType.Param, "pointCount")] [NativeName(NativeNameType.Type, "int")] int pointCount)
 		{
 			fixed (Vector2* ppoints = &points)
 			{
@@ -3846,9 +4229,9 @@ namespace Hexa.NET.Raylib
 		internal static byte CheckCollisionLinesNative([NativeName(NativeNameType.Param, "startPos1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos1, [NativeName(NativeNameType.Param, "endPos1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos1, [NativeName(NativeNameType.Param, "startPos2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 startPos2, [NativeName(NativeNameType.Param, "endPos2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 endPos2, [NativeName(NativeNameType.Param, "collisionPoint")] [NativeName(NativeNameType.Type, "Vector2 *")] Vector2* collisionPoint)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, Vector2*, byte>)funcTable[259])(startPos1, endPos1, startPos2, endPos2, collisionPoint);
+			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, Vector2*, byte>)funcTable[272])(startPos1, endPos1, startPos2, endPos2, collisionPoint);
 			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, nint, byte>)funcTable[259])(startPos1, endPos1, startPos2, endPos2, (nint)collisionPoint);
+			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, Vector2, nint, byte>)funcTable[272])(startPos1, endPos1, startPos2, endPos2, (nint)collisionPoint);
 			#endif
 		}
 
@@ -3871,35 +4254,15 @@ namespace Hexa.NET.Raylib
 			}
 		}
 
-		[NativeName(NativeNameType.Func, "CheckCollisionPointLine")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte CheckCollisionPointLineNative([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "threshold")] [NativeName(NativeNameType.Type, "int")] int threshold)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, int, byte>)funcTable[260])(point, p1, p2, threshold);
-			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Vector2, Vector2, Vector2, int, byte>)funcTable[260])(point, p1, p2, threshold);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "CheckCollisionPointLine")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool CheckCollisionPointLine([NativeName(NativeNameType.Param, "point")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 point, [NativeName(NativeNameType.Param, "p1")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p1, [NativeName(NativeNameType.Param, "p2")] [NativeName(NativeNameType.Type, "Vector2")] Vector2 p2, [NativeName(NativeNameType.Param, "threshold")] [NativeName(NativeNameType.Type, "int")] int threshold)
-		{
-			byte ret = CheckCollisionPointLineNative(point, p1, p2, threshold);
-			return ret != 0;
-		}
-
 		[NativeName(NativeNameType.Func, "GetCollisionRec")]
 		[return: NativeName(NativeNameType.Type, "Rectangle")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static Rectangle GetCollisionRecNative([NativeName(NativeNameType.Param, "rec1")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec1, [NativeName(NativeNameType.Param, "rec2")] [NativeName(NativeNameType.Type, "Rectangle")] Rectangle rec2)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, Rectangle>)funcTable[261])(rec1, rec2);
+			return ((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, Rectangle>)funcTable[273])(rec1, rec2);
 			#else
-			return (Rectangle)((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, Rectangle>)funcTable[261])(rec1, rec2);
+			return (Rectangle)((delegate* unmanaged[Cdecl]<Rectangle, Rectangle, Rectangle>)funcTable[273])(rec1, rec2);
 			#endif
 		}
 
@@ -3921,9 +4284,9 @@ namespace Hexa.NET.Raylib
 		internal static Image LoadImageNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, Image>)funcTable[262])(fileName);
+			return ((delegate* unmanaged[Cdecl]<byte*, Image>)funcTable[274])(fileName);
 			#else
-			return (Image)((delegate* unmanaged[Cdecl]<nint, Image>)funcTable[262])((nint)fileName);
+			return (Image)((delegate* unmanaged[Cdecl]<nint, Image>)funcTable[274])((nint)fileName);
 			#endif
 		}
 
@@ -4008,9 +4371,9 @@ namespace Hexa.NET.Raylib
 		internal static Image LoadImageRawNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "format")] [NativeName(NativeNameType.Type, "int")] int format, [NativeName(NativeNameType.Param, "headerSize")] [NativeName(NativeNameType.Type, "int")] int headerSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int, int, int, int, Image>)funcTable[263])(fileName, width, height, format, headerSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, int, int, int, int, Image>)funcTable[275])(fileName, width, height, format, headerSize);
 			#else
-			return (Image)((delegate* unmanaged[Cdecl]<nint, int, int, int, int, Image>)funcTable[263])((nint)fileName, width, height, format, headerSize);
+			return (Image)((delegate* unmanaged[Cdecl]<nint, int, int, int, int, Image>)funcTable[275])((nint)fileName, width, height, format, headerSize);
 			#endif
 		}
 
@@ -4073,86 +4436,15 @@ namespace Hexa.NET.Raylib
 			return ret;
 		}
 
-		[NativeName(NativeNameType.Func, "LoadImageSvg")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image LoadImageSvgNative([NativeName(NativeNameType.Param, "fileNameOrString")] [NativeName(NativeNameType.Type, "char const *")] byte* fileNameOrString, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int, int, Image>)funcTable[264])(fileNameOrString, width, height);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<nint, int, int, Image>)funcTable[264])((nint)fileNameOrString, width, height);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageSvg")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageSvg([NativeName(NativeNameType.Param, "fileNameOrString")] [NativeName(NativeNameType.Type, "char const *")] byte* fileNameOrString, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height)
-		{
-			Image ret = LoadImageSvgNative(fileNameOrString, width, height);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageSvg")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageSvg([NativeName(NativeNameType.Param, "fileNameOrString")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileNameOrString, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height)
-		{
-			fixed (byte* pfileNameOrString = &fileNameOrString)
-			{
-				Image ret = LoadImageSvgNative((byte*)pfileNameOrString, width, height);
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageSvg")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageSvg([NativeName(NativeNameType.Param, "fileNameOrString")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileNameOrString, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height)
-		{
-			fixed (byte* pfileNameOrString = fileNameOrString)
-			{
-				Image ret = LoadImageSvgNative((byte*)pfileNameOrString, width, height);
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageSvg")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageSvg([NativeName(NativeNameType.Param, "fileNameOrString")] [NativeName(NativeNameType.Type, "char const *")] string fileNameOrString, [NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileNameOrString != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileNameOrString);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileNameOrString, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			Image ret = LoadImageSvgNative(pStr0, width, height);
-			if (pStrSize0 >= Utils.MaxStackallocSize)
-			{
-				Utils.Free(pStr0);
-			}
-			return ret;
-		}
-
 		[NativeName(NativeNameType.Func, "LoadImageAnim")]
 		[return: NativeName(NativeNameType.Type, "Image")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static Image LoadImageAnimNative([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, int*, Image>)funcTable[265])(fileName, frames);
+			return ((delegate* unmanaged[Cdecl]<byte*, int*, Image>)funcTable[276])(fileName, frames);
 			#else
-			return (Image)((delegate* unmanaged[Cdecl]<nint, nint, Image>)funcTable[265])((nint)fileName, (nint)frames);
+			return (Image)((delegate* unmanaged[Cdecl]<nint, nint, Image>)funcTable[276])((nint)fileName, (nint)frames);
 			#endif
 		}
 
@@ -4286,15 +4578,311 @@ namespace Hexa.NET.Raylib
 			}
 		}
 
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		internal static Image LoadImageAnimFromMemoryNative([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			#if NET5_0_OR_GREATER
+			return ((delegate* unmanaged[Cdecl]<byte*, byte*, int, int*, Image>)funcTable[277])(fileType, fileData, dataSize, frames);
+			#else
+			return (Image)((delegate* unmanaged[Cdecl]<nint, nint, int, nint, Image>)funcTable[277])((nint)fileType, (nint)fileData, dataSize, (nint)frames);
+			#endif
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			Image ret = LoadImageAnimFromMemoryNative(fileType, fileData, dataSize, frames);
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			fixed (byte* pfileType = &fileType)
+			{
+				Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, fileData, dataSize, frames);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			fixed (byte* pfileType = fileType)
+			{
+				Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, fileData, dataSize, frames);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (fileType != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(fileType);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			Image ret = LoadImageAnimFromMemoryNative(pStr0, fileData, dataSize, frames);
+			if (pStrSize0 >= Utils.MaxStackallocSize)
+			{
+				Utils.Free(pStr0);
+			}
+			return ret;
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			fixed (byte* pfileData = &fileData)
+			{
+				Image ret = LoadImageAnimFromMemoryNative(fileType, (byte*)pfileData, dataSize, frames);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			fixed (byte* pfileType = &fileType)
+			{
+				fixed (byte* pfileData = &fileData)
+				{
+					Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, (byte*)pfileData, dataSize, frames);
+					return ret;
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			fixed (byte* pfileType = fileType)
+			{
+				fixed (byte* pfileData = &fileData)
+				{
+					Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, (byte*)pfileData, dataSize, frames);
+					return ret;
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] int* frames)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (fileType != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(fileType);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			fixed (byte* pfileData = &fileData)
+			{
+				Image ret = LoadImageAnimFromMemoryNative(pStr0, (byte*)pfileData, dataSize, frames);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					Utils.Free(pStr0);
+				}
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (int* pframes = &frames)
+			{
+				Image ret = LoadImageAnimFromMemoryNative(fileType, fileData, dataSize, (int*)pframes);
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (byte* pfileType = &fileType)
+			{
+				fixed (int* pframes = &frames)
+				{
+					Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, fileData, dataSize, (int*)pframes);
+					return ret;
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (byte* pfileType = fileType)
+			{
+				fixed (int* pframes = &frames)
+				{
+					Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, fileData, dataSize, (int*)pframes);
+					return ret;
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (fileType != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(fileType);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			fixed (int* pframes = &frames)
+			{
+				Image ret = LoadImageAnimFromMemoryNative(pStr0, fileData, dataSize, (int*)pframes);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					Utils.Free(pStr0);
+				}
+				return ret;
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (byte* pfileData = &fileData)
+			{
+				fixed (int* pframes = &frames)
+				{
+					Image ret = LoadImageAnimFromMemoryNative(fileType, (byte*)pfileData, dataSize, (int*)pframes);
+					return ret;
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (byte* pfileType = &fileType)
+			{
+				fixed (byte* pfileData = &fileData)
+				{
+					fixed (int* pframes = &frames)
+					{
+						Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, (byte*)pfileData, dataSize, (int*)pframes);
+						return ret;
+					}
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			fixed (byte* pfileType = fileType)
+			{
+				fixed (byte* pfileData = &fileData)
+				{
+					fixed (int* pframes = &frames)
+					{
+						Image ret = LoadImageAnimFromMemoryNative((byte*)pfileType, (byte*)pfileData, dataSize, (int*)pframes);
+						return ret;
+					}
+				}
+			}
+		}
+
+		[NativeName(NativeNameType.Func, "LoadImageAnimFromMemory")]
+		[return: NativeName(NativeNameType.Type, "Image")]
+		public static Image LoadImageAnimFromMemory([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] ref byte fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize, [NativeName(NativeNameType.Param, "frames")] [NativeName(NativeNameType.Type, "int *")] ref int frames)
+		{
+			byte* pStr0 = null;
+			int pStrSize0 = 0;
+			if (fileType != null)
+			{
+				pStrSize0 = Utils.GetByteCountUTF8(fileType);
+				if (pStrSize0 >= Utils.MaxStackallocSize)
+				{
+					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
+				}
+				else
+				{
+					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
+					pStr0 = pStrStack0;
+				}
+				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
+				pStr0[pStrOffset0] = 0;
+			}
+			fixed (byte* pfileData = &fileData)
+			{
+				fixed (int* pframes = &frames)
+				{
+					Image ret = LoadImageAnimFromMemoryNative(pStr0, (byte*)pfileData, dataSize, (int*)pframes);
+					if (pStrSize0 >= Utils.MaxStackallocSize)
+					{
+						Utils.Free(pStr0);
+					}
+					return ret;
+				}
+			}
+		}
+
 		[NativeName(NativeNameType.Func, "LoadImageFromMemory")]
 		[return: NativeName(NativeNameType.Type, "Image")]
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		internal static Image LoadImageFromMemoryNative([NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileData")] [NativeName(NativeNameType.Type, "unsigned char const *")] byte* fileData, [NativeName(NativeNameType.Param, "dataSize")] [NativeName(NativeNameType.Type, "int")] int dataSize)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<byte*, byte*, int, Image>)funcTable[266])(fileType, fileData, dataSize);
+			return ((delegate* unmanaged[Cdecl]<byte*, byte*, int, Image>)funcTable[278])(fileType, fileData, dataSize);
 			#else
-			return (Image)((delegate* unmanaged[Cdecl]<nint, nint, int, Image>)funcTable[266])((nint)fileType, (nint)fileData, dataSize);
+			return (Image)((delegate* unmanaged[Cdecl]<nint, nint, int, Image>)funcTable[278])((nint)fileType, (nint)fileData, dataSize);
 			#endif
 		}
 
@@ -4434,588 +5022,9 @@ namespace Hexa.NET.Raylib
 		internal static Image LoadImageFromTextureNative([NativeName(NativeNameType.Param, "texture")] [NativeName(NativeNameType.Type, "Texture2D")] Texture texture)
 		{
 			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Texture, Image>)funcTable[267])(texture);
+			return ((delegate* unmanaged[Cdecl]<Texture, Image>)funcTable[279])(texture);
 			#else
-			return (Image)((delegate* unmanaged[Cdecl]<Texture, Image>)funcTable[267])(texture);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageFromTexture")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageFromTexture([NativeName(NativeNameType.Param, "texture")] [NativeName(NativeNameType.Type, "Texture2D")] Texture texture)
-		{
-			Image ret = LoadImageFromTextureNative(texture);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageFromScreen")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image LoadImageFromScreenNative()
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Image>)funcTable[268])();
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<Image>)funcTable[268])();
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "LoadImageFromScreen")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image LoadImageFromScreen()
-		{
-			Image ret = LoadImageFromScreenNative();
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "IsImageReady")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte IsImageReadyNative([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Image, byte>)funcTable[269])(image);
-			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Image, byte>)funcTable[269])(image);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "IsImageReady")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool IsImageReady([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image)
-		{
-			byte ret = IsImageReadyNative(image);
-			return ret != 0;
-		}
-
-		[NativeName(NativeNameType.Func, "UnloadImage")]
-		[return: NativeName(NativeNameType.Type, "void")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static void UnloadImageNative([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image)
-		{
-			#if NET5_0_OR_GREATER
-			((delegate* unmanaged[Cdecl]<Image, void>)funcTable[270])(image);
-			#else
-			((delegate* unmanaged[Cdecl]<Image, void>)funcTable[270])(image);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "UnloadImage")]
-		[return: NativeName(NativeNameType.Type, "void")]
-		public static void UnloadImage([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image)
-		{
-			UnloadImageNative(image);
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImage")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte ExportImageNative([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Image, byte*, byte>)funcTable[271])(image, fileName);
-			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Image, nint, byte>)funcTable[271])(image, (nint)fileName);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImage")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImage([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
-		{
-			byte ret = ExportImageNative(image, fileName);
-			return ret != 0;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImage")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImage([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileName)
-		{
-			fixed (byte* pfileName = &fileName)
-			{
-				byte ret = ExportImageNative(image, (byte*)pfileName);
-				return ret != 0;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImage")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImage([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileName)
-		{
-			fixed (byte* pfileName = fileName)
-			{
-				byte ret = ExportImageNative(image, (byte*)pfileName);
-				return ret != 0;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImage")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImage([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] string fileName)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileName != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileName);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileName, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			byte ret = ExportImageNative(image, pStr0);
-			if (pStrSize0 >= Utils.MaxStackallocSize)
-			{
-				Utils.Free(pStr0);
-			}
-			return ret != 0;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte* ExportImageToMemoryNative([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Image, byte*, int*, byte*>)funcTable[272])(image, fileType, fileSize);
-			#else
-			return (byte*)((delegate* unmanaged[Cdecl]<Image, nint, nint, nint>)funcTable[272])(image, (nint)fileType, (nint)fileSize);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			byte* ret = ExportImageToMemoryNative(image, fileType, fileSize);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, fileType, fileSize));
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			fixed (byte* pfileType = &fileType)
-			{
-				byte* ret = ExportImageToMemoryNative(image, (byte*)pfileType, fileSize);
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			fixed (byte* pfileType = &fileType)
-			{
-				string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, (byte*)pfileType, fileSize));
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			fixed (byte* pfileType = fileType)
-			{
-				byte* ret = ExportImageToMemoryNative(image, (byte*)pfileType, fileSize);
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			fixed (byte* pfileType = fileType)
-			{
-				string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, (byte*)pfileType, fileSize));
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileType != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileType);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			byte* ret = ExportImageToMemoryNative(image, pStr0, fileSize);
-			if (pStrSize0 >= Utils.MaxStackallocSize)
-			{
-				Utils.Free(pStr0);
-			}
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] int* fileSize)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileType != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileType);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, pStr0, fileSize));
-			if (pStrSize0 >= Utils.MaxStackallocSize)
-			{
-				Utils.Free(pStr0);
-			}
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (int* pfileSize = &fileSize)
-			{
-				byte* ret = ExportImageToMemoryNative(image, fileType, (int*)pfileSize);
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] byte* fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (int* pfileSize = &fileSize)
-			{
-				string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, fileType, (int*)pfileSize));
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (byte* pfileType = &fileType)
-			{
-				fixed (int* pfileSize = &fileSize)
-				{
-					byte* ret = ExportImageToMemoryNative(image, (byte*)pfileType, (int*)pfileSize);
-					return ret;
-				}
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (byte* pfileType = &fileType)
-			{
-				fixed (int* pfileSize = &fileSize)
-				{
-					string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, (byte*)pfileType, (int*)pfileSize));
-					return ret;
-				}
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (byte* pfileType = fileType)
-			{
-				fixed (int* pfileSize = &fileSize)
-				{
-					byte* ret = ExportImageToMemoryNative(image, (byte*)pfileType, (int*)pfileSize);
-					return ret;
-				}
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			fixed (byte* pfileType = fileType)
-			{
-				fixed (int* pfileSize = &fileSize)
-				{
-					string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, (byte*)pfileType, (int*)pfileSize));
-					return ret;
-				}
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static byte* ExportImageToMemory([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileType != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileType);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			fixed (int* pfileSize = &fileSize)
-			{
-				byte* ret = ExportImageToMemoryNative(image, pStr0, (int*)pfileSize);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					Utils.Free(pStr0);
-				}
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageToMemory")]
-		[return: NativeName(NativeNameType.Type, "unsigned char *")]
-		public static string ExportImageToMemoryS([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileType")] [NativeName(NativeNameType.Type, "char const *")] string fileType, [NativeName(NativeNameType.Param, "fileSize")] [NativeName(NativeNameType.Type, "int *")] ref int fileSize)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileType != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileType);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileType, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			fixed (int* pfileSize = &fileSize)
-			{
-				string ret = Utils.DecodeStringUTF8(ExportImageToMemoryNative(image, pStr0, (int*)pfileSize));
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					Utils.Free(pStr0);
-				}
-				return ret;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageAsCode")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static byte ExportImageAsCodeNative([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<Image, byte*, byte>)funcTable[273])(image, fileName);
-			#else
-			return (byte)((delegate* unmanaged[Cdecl]<Image, nint, byte>)funcTable[273])(image, (nint)fileName);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageAsCode")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImageAsCode([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName)
-		{
-			byte ret = ExportImageAsCodeNative(image, fileName);
-			return ret != 0;
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageAsCode")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImageAsCode([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ref byte fileName)
-		{
-			fixed (byte* pfileName = &fileName)
-			{
-				byte ret = ExportImageAsCodeNative(image, (byte*)pfileName);
-				return ret != 0;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageAsCode")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImageAsCode([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] ReadOnlySpan<byte> fileName)
-		{
-			fixed (byte* pfileName = fileName)
-			{
-				byte ret = ExportImageAsCodeNative(image, (byte*)pfileName);
-				return ret != 0;
-			}
-		}
-
-		[NativeName(NativeNameType.Func, "ExportImageAsCode")]
-		[return: NativeName(NativeNameType.Type, "bool")]
-		public static bool ExportImageAsCode([NativeName(NativeNameType.Param, "image")] [NativeName(NativeNameType.Type, "Image")] Image image, [NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] string fileName)
-		{
-			byte* pStr0 = null;
-			int pStrSize0 = 0;
-			if (fileName != null)
-			{
-				pStrSize0 = Utils.GetByteCountUTF8(fileName);
-				if (pStrSize0 >= Utils.MaxStackallocSize)
-				{
-					pStr0 = Utils.Alloc<byte>(pStrSize0 + 1);
-				}
-				else
-				{
-					byte* pStrStack0 = stackalloc byte[pStrSize0 + 1];
-					pStr0 = pStrStack0;
-				}
-				int pStrOffset0 = Utils.EncodeStringUTF8(fileName, pStr0, pStrSize0);
-				pStr0[pStrOffset0] = 0;
-			}
-			byte ret = ExportImageAsCodeNative(image, pStr0);
-			if (pStrSize0 >= Utils.MaxStackallocSize)
-			{
-				Utils.Free(pStr0);
-			}
-			return ret != 0;
-		}
-
-		/// <summary>
-		/// Image generation functions<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Func, "GenImageColor")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image GenImageColorNative([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, Color, Image>)funcTable[274])(width, height, color);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<int, int, Color, Image>)funcTable[274])(width, height, color);
-			#endif
-		}
-
-		/// <summary>
-		/// Image generation functions<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Func, "GenImageColor")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image GenImageColor([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "color")] [NativeName(NativeNameType.Type, "Color")] Color color)
-		{
-			Image ret = GenImageColorNative(width, height, color);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientLinear")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image GenImageGradientLinearNative([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "direction")] [NativeName(NativeNameType.Type, "int")] int direction, [NativeName(NativeNameType.Param, "start")] [NativeName(NativeNameType.Type, "Color")] Color start, [NativeName(NativeNameType.Param, "end")] [NativeName(NativeNameType.Type, "Color")] Color end)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, int, Color, Color, Image>)funcTable[275])(width, height, direction, start, end);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<int, int, int, Color, Color, Image>)funcTable[275])(width, height, direction, start, end);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientLinear")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image GenImageGradientLinear([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "direction")] [NativeName(NativeNameType.Type, "int")] int direction, [NativeName(NativeNameType.Param, "start")] [NativeName(NativeNameType.Type, "Color")] Color start, [NativeName(NativeNameType.Param, "end")] [NativeName(NativeNameType.Type, "Color")] Color end)
-		{
-			Image ret = GenImageGradientLinearNative(width, height, direction, start, end);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientRadial")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image GenImageGradientRadialNative([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "density")] [NativeName(NativeNameType.Type, "float")] float density, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, Image>)funcTable[276])(width, height, density, inner, outer);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, Image>)funcTable[276])(width, height, density, inner, outer);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientRadial")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image GenImageGradientRadial([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "density")] [NativeName(NativeNameType.Type, "float")] float density, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
-		{
-			Image ret = GenImageGradientRadialNative(width, height, density, inner, outer);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientSquare")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image GenImageGradientSquareNative([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "density")] [NativeName(NativeNameType.Type, "float")] float density, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, Image>)funcTable[277])(width, height, density, inner, outer);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<int, int, float, Color, Color, Image>)funcTable[277])(width, height, density, inner, outer);
-			#endif
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageGradientSquare")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		public static Image GenImageGradientSquare([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "density")] [NativeName(NativeNameType.Type, "float")] float density, [NativeName(NativeNameType.Param, "inner")] [NativeName(NativeNameType.Type, "Color")] Color inner, [NativeName(NativeNameType.Param, "outer")] [NativeName(NativeNameType.Type, "Color")] Color outer)
-		{
-			Image ret = GenImageGradientSquareNative(width, height, density, inner, outer);
-			return ret;
-		}
-
-		[NativeName(NativeNameType.Func, "GenImageChecked")]
-		[return: NativeName(NativeNameType.Type, "Image")]
-		[MethodImpl(MethodImplOptions.AggressiveInlining)]
-		internal static Image GenImageCheckedNative([NativeName(NativeNameType.Param, "width")] [NativeName(NativeNameType.Type, "int")] int width, [NativeName(NativeNameType.Param, "height")] [NativeName(NativeNameType.Type, "int")] int height, [NativeName(NativeNameType.Param, "checksX")] [NativeName(NativeNameType.Type, "int")] int checksX, [NativeName(NativeNameType.Param, "checksY")] [NativeName(NativeNameType.Type, "int")] int checksY, [NativeName(NativeNameType.Param, "col1")] [NativeName(NativeNameType.Type, "Color")] Color col1, [NativeName(NativeNameType.Param, "col2")] [NativeName(NativeNameType.Type, "Color")] Color col2)
-		{
-			#if NET5_0_OR_GREATER
-			return ((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, Image>)funcTable[278])(width, height, checksX, checksY, col1, col2);
-			#else
-			return (Image)((delegate* unmanaged[Cdecl]<int, int, int, int, Color, Color, Image>)funcTable[278])(width, height, checksX, checksY, col1, col2);
+			return (Image)((delegate* unmanaged[Cdecl]<Texture, Image>)funcTable[279])(texture);
 			#endif
 		}
 	}

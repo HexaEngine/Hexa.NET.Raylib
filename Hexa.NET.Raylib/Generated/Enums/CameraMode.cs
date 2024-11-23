@@ -21,35 +21,35 @@ namespace Hexa.NET.Raylib
 	public enum CameraMode : int
 	{
 		/// <summary>
-		/// Custom camera<br/>
+		/// Camera custom, controlled by user (UpdateCamera() does nothing)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "CAMERA_CUSTOM")]
 		[NativeName(NativeNameType.Value, "0")]
 		Custom = unchecked(0),
 
 		/// <summary>
-		/// Free camera<br/>
+		/// Camera free mode<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "CAMERA_FREE")]
 		[NativeName(NativeNameType.Value, "1")]
 		Free = unchecked(1),
 
 		/// <summary>
-		/// Orbital camera<br/>
+		/// Camera orbital, around target, zoom supported<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "CAMERA_ORBITAL")]
 		[NativeName(NativeNameType.Value, "2")]
 		Orbital = unchecked(2),
 
 		/// <summary>
-		/// First person camera<br/>
+		/// Camera first person<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "CAMERA_FIRST_PERSON")]
 		[NativeName(NativeNameType.Value, "3")]
 		FirstPerson = unchecked(3),
 
 		/// <summary>
-		/// Third person camera<br/>
+		/// Camera third person<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "CAMERA_THIRD_PERSON")]
 		[NativeName(NativeNameType.Value, "4")]

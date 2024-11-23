@@ -54,12 +54,5 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.EnumItem, "CUBEMAP_LAYOUT_CROSS_FOUR_BY_THREE")]
 		[NativeName(NativeNameType.Value, "4")]
 		CrossFourByThree = unchecked(4),
-
-		/// <summary>
-		/// Layout is defined by a panorama image (equirrectangular map)<br/>
-		/// </summary>
-		[NativeName(NativeNameType.EnumItem, "CUBEMAP_LAYOUT_PANORAMA")]
-		[NativeName(NativeNameType.Value, "5")]
-		Panorama = unchecked(5),
 	}
 }

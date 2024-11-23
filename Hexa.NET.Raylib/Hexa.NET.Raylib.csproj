@@ -9,9 +9,9 @@
 		<LangVersion>12</LangVersion>
 
 		<PackageId>Hexa.NET.Raylib</PackageId>
-		<AssemblyVersion>1.11.0</AssemblyVersion>
-		<PackageVersion>1.1.1</PackageVersion>
-		<Description>A .NET Wrapper for Raylib (v 5.0), generated with the HexaGen code generator. HexaGen allows users to access native libraries easily and with high performance.</Description>
+		<AssemblyVersion>5.5.0</AssemblyVersion>
+		<PackageVersion>1.2.0</PackageVersion>
+		<Description>A .NET Wrapper for Raylib (v 5.5), generated with the HexaGen code generator. HexaGen allows users to access native libraries easily and with high performance.</Description>
 		<PackageTags>Raylib graphics 2D 3D Hexa HexaGen Source Generator C# .NET DotNet Sharp Windows macOS Android Bindings Wrapper Native</PackageTags>
 		<Authors>Juna Meinhold</Authors>
 		<Copyright>Copyright (c) 2024 Juna Meinhold</Copyright>
