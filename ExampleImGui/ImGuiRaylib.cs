@@ -70,12 +70,12 @@
             io.Fonts.TexID = new ImTextureID((nint)fontTexture);
         }
 
-        private static byte* GetClipTextCallback(void* userdata)
+        private static byte* GetClipTextCallback(ImGuiContext* ctx)
         {
             return Raylib.GetClipboardText();
         }
 
-        private static void SetClipTextCallback(void* userdata, byte* text)
+        private static void SetClipTextCallback(ImGuiContext* ctx, byte* text)
         {
             Raylib.SetClipboardText(text);
         }
@@ -373,10 +373,10 @@
 
             ImGuiPlatformIOPtr platformIO = ImGui.GetPlatformIO();
 
-            io.SetClipboardTextFn = (void*)Marshal.GetFunctionPointerForDelegate<SetClipboardTextFn>(SetClipTextCallback);
-            io.GetClipboardTextFn = (void*)Marshal.GetFunctionPointerForDelegate<GetClipboardTextFn>(GetClipTextCallback);
+            platformIO.PlatformSetClipboardTextFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformSetClipboardTextFn>(SetClipTextCallback);
+            platformIO.PlatformGetClipboardTextFn = (void*)Marshal.GetFunctionPointerForDelegate<PlatformGetClipboardTextFn>(GetClipTextCallback);
 
-            io.ClipboardUserData = null;
+            platformIO.PlatformClipboardUserData = null;
 
             BuildFontAtlas();
 
