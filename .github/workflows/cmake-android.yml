@@ -45,7 +45,6 @@ jobs:
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install "build-tools;29.0.3"
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install "platform-tools"
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install "platforms;android-28"
-          yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --install "extras;google"
           echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/26.3.11579264" >> $GITHUB_ENV
           echo "PATH=$PATH:$ANDROID_HOME/ndk/26.3.11579264" >> $GITHUB_ENV
   
