@@ -8,8 +8,10 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: self-hosted
+          - os: linux
             arch: arm64
+            cmake-arch: aarch64
+            runner-label: self-hosted
 #          - os: windows-latest
 #            arch: arm64
 #            triplet: arm64-windows
@@ -39,12 +41,17 @@ jobs:
     - name: Build raylib
       run: cmake --build raylib/build --config Release
 
+    - name: Move Windows binaries
+      if: matrix.os == 'windows-latest'
+      run: |
+        mv raylib/build/raylib/Release/*.dll raylib/build/raylib/
+
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4.3.4
       with:
-        name: ${{ matrix.os }}-${{ matrix.arch }}-artifacts 
+        name: raylib-${{ matrix.os }}-${{ matrix.arch }}-artifacts 
         path: |
-          raylib/build/raylib/Release/*.dll
+          raylib/build/raylib/*.dll
           raylib/build/raylib/*.so
           raylib/build/raylib/*.dylib
         if-no-files-found: ignore # 'warn' or 'ignore' or 'error'
