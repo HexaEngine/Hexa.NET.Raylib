@@ -22,3 +22,13 @@ jobs:
       bin-name-linux-normalized: "libraylib.so"
       bin-name-android-normalized: "libraylib.so"
       bin-name-windows-normalized: "raylib.dll"
+
+  create-pr:
+    needs: [build]
+    uses: JunaMeinhold/cmake-actions/.github/workflows/create-pr.yml@v1.x.x
+    with:
+      lib-name: "raylib"
+      lib-version: "6.0"
+      pr-base-branch: "main"
+      pr-reviewers: JunaMeinhold
+      pr-branch: raylib-artifacts
