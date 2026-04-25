@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Mouse buttons<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "MouseButton")]
-	[Flags]
 	public enum MouseButton : int
 	{
 		/// <summary>

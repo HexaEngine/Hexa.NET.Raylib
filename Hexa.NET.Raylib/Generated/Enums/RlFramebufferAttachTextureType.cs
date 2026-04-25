@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Framebuffer texture attachment type<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlFramebufferAttachTextureType")]
-	[Flags]
 	public enum RlFramebufferAttachTextureType : int
 	{
 		/// <summary>

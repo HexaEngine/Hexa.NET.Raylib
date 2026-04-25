@@ -15,9 +15,10 @@ namespace Hexa.NET.Raylib
 {
 	/// <summary>
 	/// Shader location index<br/>
+	/// NOTE: Some locations are tried to be set automatically on shader loading,<br/>
+	/// but only if default attributes/uniforms names are found, check config.h for names<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "ShaderLocationIndex")]
-	[Flags]
 	public enum ShaderLocationIndex : int
 	{
 		/// <summary>
@@ -168,7 +169,7 @@ namespace Hexa.NET.Raylib
 		LocMapEmission = unchecked(20),
 
 		/// <summary>
-		/// Shader location: sampler2d texture: height<br/>
+		/// Shader location: sampler2d texture: heightmap<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_MAP_HEIGHT")]
 		[NativeName(NativeNameType.Value, "21")]
@@ -203,24 +204,31 @@ namespace Hexa.NET.Raylib
 		LocMapBrdf = unchecked(25),
 
 		/// <summary>
-		/// Shader location: vertex attribute: boneIds<br/>
+		/// Shader location: vertex attribute: bone indices<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_VERTEX_BONEIDS")]
 		[NativeName(NativeNameType.Value, "26")]
 		LocVertexBoneids = unchecked(26),
 
 		/// <summary>
-		/// Shader location: vertex attribute: boneWeights<br/>
+		/// Shader location: vertex attribute: bone weights<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_VERTEX_BONEWEIGHTS")]
 		[NativeName(NativeNameType.Value, "27")]
 		LocVertexBoneweights = unchecked(27),
 
 		/// <summary>
-		/// Shader location: array of matrices uniform: boneMatrices<br/>
+		/// Shader location: matrix attribute: bone transforms (animation)<br/>
 		/// </summary>
-		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_BONE_MATRICES")]
+		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_MATRIX_BONETRANSFORMS")]
 		[NativeName(NativeNameType.Value, "28")]
-		LocBoneMatrices = unchecked(28),
+		LocMatrixBonetransforms = unchecked(28),
+
+		/// <summary>
+		/// Shader location: vertex attribute: instance transforms<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "SHADER_LOC_VERTEX_INSTANCETRANSFORM")]
+		[NativeName(NativeNameType.Value, "29")]
+		LocVertexInstancetransform = unchecked(29),
 	}
 }

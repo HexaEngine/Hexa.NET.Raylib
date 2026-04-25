@@ -18,7 +18,6 @@ namespace Hexa.NET.Raylib
 	/// NOTE: Organized by priority level<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlTraceLogLevel")]
-	[Flags]
 	public enum RlTraceLogLevel : int
 	{
 		/// <summary>

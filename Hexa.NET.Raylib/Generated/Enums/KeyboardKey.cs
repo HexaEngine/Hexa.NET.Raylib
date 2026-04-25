@@ -15,11 +15,9 @@ namespace Hexa.NET.Raylib
 {
 	/// <summary>
 	/// Keyboard keys (US keyboard layout)<br/>
-	/// NOTE: Use GetKeyPressed() to allow redefining<br/>
-	/// required keys for alternative layouts<br/>
+	/// NOTE: Use GetKeyPressed() to allow redefining required keys for alternative layouts<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "KeyboardKey")]
-	[Flags]
 	public enum KeyboardKey : int
 	{
 		/// <summary>

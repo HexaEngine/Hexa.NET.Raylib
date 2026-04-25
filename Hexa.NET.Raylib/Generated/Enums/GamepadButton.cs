@@ -17,11 +17,10 @@ namespace Hexa.NET.Raylib
 	/// Gamepad buttons<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "GamepadButton")]
-	[Flags]
 	public enum GamepadButton : int
 	{
 		/// <summary>
-		/// Unknown button, just for error checking<br/>
+		/// Unknown button, for error checking<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "GAMEPAD_BUTTON_UNKNOWN")]
 		[NativeName(NativeNameType.Value, "0")]

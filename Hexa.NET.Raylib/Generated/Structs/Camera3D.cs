@@ -45,7 +45,7 @@ namespace Hexa.NET.Raylib
 		public Vector3 Up;
 
 		/// <summary>
-		/// Camera field-of-view aperture in Y (degrees) in perspective, used as near plane width in orthographic<br/>
+		/// Camera field-of-view aperture in Y (degrees) in perspective, used as near plane height in world units in orthographic<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "fovy")]
 		[NativeName(NativeNameType.Type, "float")]

@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Cubemap layouts<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "CubemapLayout")]
-	[Flags]
 	public enum CubemapLayout : int
 	{
 		/// <summary>

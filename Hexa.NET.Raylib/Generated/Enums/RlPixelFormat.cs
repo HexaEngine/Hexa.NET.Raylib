@@ -18,7 +18,6 @@ namespace Hexa.NET.Raylib
 	/// NOTE: Support depends on OpenGL version<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlPixelFormat")]
-	[Flags]
 	public enum RlPixelFormat : int
 	{
 		/// <summary>

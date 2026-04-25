@@ -19,7 +19,7 @@ namespace Hexa.NET.Raylib
 	/// <summary>
 	/// Draw call type<br/>
 	/// NOTE: Only texture changes register a new draw, other state-change-related elements are not<br/>
-	/// used at this moment (vaoId, shaderId, matrices), raylib just forces a batch draw call if any<br/>
+	/// used at this moment (vaoId, shaderId, matrices), raylib forces a batch draw call if any<br/>
 	/// of those state-change happens (this is done in core module)<br/>
 	/// </summary>
 	[NativeName(NativeNameType.StructOrClass, "rlDrawCall")]

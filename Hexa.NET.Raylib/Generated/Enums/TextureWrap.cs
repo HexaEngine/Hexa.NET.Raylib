@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Texture parameters: wrap mode<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "TextureWrap")]
-	[Flags]
 	public enum TextureWrap : int
 	{
 		/// <summary>

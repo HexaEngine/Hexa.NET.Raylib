@@ -17,9 +17,15 @@ namespace Hexa.NET.Raylib
 	/// OpenGL version<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlGlVersion")]
-	[Flags]
 	public enum RlGlVersion : int
 	{
+		/// <summary>
+		/// Software rendering<br/>
+		/// </summary>
+		[NativeName(NativeNameType.EnumItem, "RL_OPENGL_SOFTWARE")]
+		[NativeName(NativeNameType.Value, "0")]
+		OpenglSoftware = unchecked(0),
+
 		/// <summary>
 		/// OpenGL 1.1<br/>
 		/// </summary>

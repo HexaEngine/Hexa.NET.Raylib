@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Mouse cursor<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "MouseCursor")]
-	[Flags]
 	public enum MouseCursor : int
 	{
 		/// <summary>

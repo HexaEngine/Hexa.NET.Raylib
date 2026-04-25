@@ -19,11 +19,10 @@ namespace Hexa.NET.Raylib
 	/// NOTE 2: Filter is accordingly set for minification and magnification<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "TextureFilter")]
-	[Flags]
 	public enum TextureFilter : int
 	{
 		/// <summary>
-		/// No filter, just pixel approximation<br/>
+		/// No filter, pixel approximation<br/>
 		/// </summary>
 		[NativeName(NativeNameType.EnumItem, "TEXTURE_FILTER_POINT")]
 		[NativeName(NativeNameType.Value, "0")]

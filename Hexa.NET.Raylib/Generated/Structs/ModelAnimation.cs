@@ -17,40 +17,12 @@ using System.Numerics;
 namespace Hexa.NET.Raylib
 {
 	/// <summary>
-	/// ModelAnimation<br/>
+	/// ModelAnimation, contains a full animation sequence<br/>
 	/// </summary>
 	[NativeName(NativeNameType.StructOrClass, "ModelAnimation")]
 	[StructLayout(LayoutKind.Sequential)]
 	public partial struct ModelAnimation
 	{
-		/// <summary>
-		/// Number of bones<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "boneCount")]
-		[NativeName(NativeNameType.Type, "int")]
-		public int BoneCount;
-
-		/// <summary>
-		/// Number of animation frames<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "frameCount")]
-		[NativeName(NativeNameType.Type, "int")]
-		public int FrameCount;
-
-		/// <summary>
-		/// Bones information (skeleton)<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "bones")]
-		[NativeName(NativeNameType.Type, "BoneInfo *")]
-		public unsafe BoneInfo* Bones;
-
-		/// <summary>
-		/// Poses array by frame<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "framePoses")]
-		[NativeName(NativeNameType.Type, "Transform * *")]
-		public unsafe Transform** FramePoses;
-
 		/// <summary>
 		/// Animation name<br/>
 		/// </summary>
@@ -89,13 +61,30 @@ namespace Hexa.NET.Raylib
 		public byte Name_30;
 		public byte Name_31;
 
+		/// <summary>
+		/// Number of bones (per pose)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "boneCount")]
+		[NativeName(NativeNameType.Type, "int")]
+		public int BoneCount;
 
-		public unsafe ModelAnimation(int boneCount = default, int frameCount = default, BoneInfo* bones = default, Transform** framePoses = default, byte* name = default)
+		/// <summary>
+		/// Number of animation key frames<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "keyframeCount")]
+		[NativeName(NativeNameType.Type, "int")]
+		public int KeyframeCount;
+
+		/// <summary>
+		/// Animation sequence keyframe poses [keyframe][pose]<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "keyframePoses")]
+		[NativeName(NativeNameType.Type, "ModelAnimPose *")]
+		public unsafe Transform** KeyframePoses;
+
+
+		public unsafe ModelAnimation(byte* name = default, int boneCount = default, int keyframeCount = default, Transform** keyframePoses = default)
 		{
-			BoneCount = boneCount;
-			FrameCount = frameCount;
-			Bones = bones;
-			FramePoses = framePoses;
 			if (name != default(byte*))
 			{
 				Name_0 = name[0];
@@ -131,14 +120,13 @@ namespace Hexa.NET.Raylib
 				Name_30 = name[30];
 				Name_31 = name[31];
 			}
+			BoneCount = boneCount;
+			KeyframeCount = keyframeCount;
+			KeyframePoses = keyframePoses;
 		}
 
-		public unsafe ModelAnimation(int boneCount = default, int frameCount = default, BoneInfo* bones = default, Transform** framePoses = default, Span<byte> name = default)
+		public unsafe ModelAnimation(Span<byte> name = default, int boneCount = default, int keyframeCount = default, Transform** keyframePoses = default)
 		{
-			BoneCount = boneCount;
-			FrameCount = frameCount;
-			Bones = bones;
-			FramePoses = framePoses;
 			if (name != default(Span<byte>))
 			{
 				Name_0 = name[0];
@@ -174,6 +162,9 @@ namespace Hexa.NET.Raylib
 				Name_30 = name[30];
 				Name_31 = name[31];
 			}
+			BoneCount = boneCount;
+			KeyframeCount = keyframeCount;
+			KeyframePoses = keyframePoses;
 		}
 
 

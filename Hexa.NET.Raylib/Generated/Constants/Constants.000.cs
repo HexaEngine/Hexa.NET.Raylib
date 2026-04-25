@@ -35,6 +35,10 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_MODULE_RAUDIO = 1;
 
+		[NativeName(NativeNameType.Const, "SUPPORT_TRACELOG")]
+		[NativeName(NativeNameType.Value, "1")]
+		public const int SUPPORT_TRACELOG = 1;
+
 		[NativeName(NativeNameType.Const, "SUPPORT_CAMERA_SYSTEM")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_CAMERA_SYSTEM = 1;
@@ -59,6 +63,10 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_WINMM_HIGHRES_TIMER = 1;
 
+		[NativeName(NativeNameType.Const, "SUPPORT_BUSY_WAIT_LOOP")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_BUSY_WAIT_LOOP = 0;
+
 		[NativeName(NativeNameType.Const, "SUPPORT_PARTIALBUSY_WAIT_LOOP")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_PARTIALBUSY_WAIT_LOOP = 1;
@@ -66,10 +74,6 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Const, "SUPPORT_SCREEN_CAPTURE")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_SCREEN_CAPTURE = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_GIF_RECORDING")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_GIF_RECORDING = 1;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_COMPRESSION_API")]
 		[NativeName(NativeNameType.Value, "1")]
@@ -79,197 +83,41 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_AUTOMATION_EVENTS = 1;
 
-		[NativeName(NativeNameType.Const, "MAX_FILEPATH_CAPACITY")]
-		[NativeName(NativeNameType.Value, "8192")]
-		public const int MAX_FILEPATH_CAPACITY = 8192;
-
-		[NativeName(NativeNameType.Const, "MAX_FILEPATH_LENGTH")]
-		[NativeName(NativeNameType.Value, "4096")]
-		public const int MAX_FILEPATH_LENGTH = 4096;
-
-		[NativeName(NativeNameType.Const, "MAX_KEYBOARD_KEYS")]
-		[NativeName(NativeNameType.Value, "512")]
-		public const int MAX_KEYBOARD_KEYS = 512;
-
-		[NativeName(NativeNameType.Const, "MAX_MOUSE_BUTTONS")]
-		[NativeName(NativeNameType.Value, "8")]
-		public const int MAX_MOUSE_BUTTONS = 8;
-
-		[NativeName(NativeNameType.Const, "MAX_GAMEPADS")]
-		[NativeName(NativeNameType.Value, "4")]
-		public const int MAX_GAMEPADS = 4;
-
-		[NativeName(NativeNameType.Const, "MAX_GAMEPAD_AXIS")]
-		[NativeName(NativeNameType.Value, "8")]
-		public const int MAX_GAMEPAD_AXIS = 8;
-
-		[NativeName(NativeNameType.Const, "MAX_GAMEPAD_BUTTONS")]
-		[NativeName(NativeNameType.Value, "32")]
-		public const int MAX_GAMEPAD_BUTTONS = 32;
-
-		[NativeName(NativeNameType.Const, "MAX_GAMEPAD_VIBRATION_TIME")]
-		[NativeName(NativeNameType.Value, "2.0f")]
-		public const float MAX_GAMEPAD_VIBRATION_TIME = 2.0f;
-
-		[NativeName(NativeNameType.Const, "MAX_TOUCH_POINTS")]
-		[NativeName(NativeNameType.Value, "8")]
-		public const int MAX_TOUCH_POINTS = 8;
-
-		[NativeName(NativeNameType.Const, "MAX_KEY_PRESSED_QUEUE")]
-		[NativeName(NativeNameType.Value, "16")]
-		public const int MAX_KEY_PRESSED_QUEUE = 16;
-
-		[NativeName(NativeNameType.Const, "MAX_CHAR_PRESSED_QUEUE")]
-		[NativeName(NativeNameType.Value, "16")]
-		public const int MAX_CHAR_PRESSED_QUEUE = 16;
-
-		[NativeName(NativeNameType.Const, "MAX_DECOMPRESSION_SIZE")]
-		[NativeName(NativeNameType.Value, "64")]
-		public const int MAX_DECOMPRESSION_SIZE = 64;
-
-		[NativeName(NativeNameType.Const, "MAX_AUTOMATION_EVENTS")]
-		[NativeName(NativeNameType.Value, "16384")]
-		public const int MAX_AUTOMATION_EVENTS = 16384;
-
-		[NativeName(NativeNameType.Const, "RL_SUPPORT_MESH_GPU_SKINNING")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int RL_SUPPORT_MESH_GPU_SKINNING = 1;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_BUFFERS")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int RL_DEFAULT_BATCH_BUFFERS = 1;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_DRAWCALLS")]
-		[NativeName(NativeNameType.Value, "256")]
-		public const int RL_DEFAULT_BATCH_DRAWCALLS = 256;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS")]
-		[NativeName(NativeNameType.Value, "4")]
-		public const int RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS = 4;
-
-		[NativeName(NativeNameType.Const, "RL_MAX_MATRIX_STACK_SIZE")]
-		[NativeName(NativeNameType.Value, "32")]
-		public const int RL_MAX_MATRIX_STACK_SIZE = 32;
-
-		[NativeName(NativeNameType.Const, "RL_MAX_SHADER_LOCATIONS")]
-		[NativeName(NativeNameType.Value, "32")]
-		public const int RL_MAX_SHADER_LOCATIONS = 32;
-
-		[NativeName(NativeNameType.Const, "RL_CULL_DISTANCE_NEAR")]
-		[NativeName(NativeNameType.Value, "0.01")]
-		public const double RL_CULL_DISTANCE_NEAR = 0.01;
-
-		[NativeName(NativeNameType.Const, "RL_CULL_DISTANCE_FAR")]
-		[NativeName(NativeNameType.Value, "1000.0")]
-		public const double RL_CULL_DISTANCE_FAR = 1000.0;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION")]
+		[NativeName(NativeNameType.Const, "SUPPORT_CUSTOM_FRAME_CONTROL")]
 		[NativeName(NativeNameType.Value, "0")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION = 0;
+		public const int SUPPORT_CUSTOM_FRAME_CONTROL = 0;
 
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD")]
+		[NativeName(NativeNameType.Const, "SUPPORT_CLIPBOARD_IMAGE")]
 		[NativeName(NativeNameType.Value, "1")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD = 1;
+		public const int SUPPORT_CLIPBOARD_IMAGE = 1;
 
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL")]
-		[NativeName(NativeNameType.Value, "2")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL = 2;
+		[NativeName(NativeNameType.Const, "RLGL_ENABLE_OPENGL_DEBUG_CONTEXT")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int RLGL_ENABLE_OPENGL_DEBUG_CONTEXT = 0;
 
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR")]
-		[NativeName(NativeNameType.Value, "3")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR = 3;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT")]
-		[NativeName(NativeNameType.Value, "4")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT = 4;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2")]
-		[NativeName(NativeNameType.Value, "5")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2 = 5;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES")]
-		[NativeName(NativeNameType.Value, "6")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES = 6;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEIDS")]
-		[NativeName(NativeNameType.Value, "7")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEIDS = 7;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS")]
-		[NativeName(NativeNameType.Value, "8")]
-		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS = 8;
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION")]
-		[NativeName(NativeNameType.Value, "\"vertexPosition\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_POSITION = "vertexPosition";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD")]
-		[NativeName(NativeNameType.Value, "\"vertexTexCoord\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD = "vertexTexCoord";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL")]
-		[NativeName(NativeNameType.Value, "\"vertexNormal\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_NORMAL = "vertexNormal";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR")]
-		[NativeName(NativeNameType.Value, "\"vertexColor\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_COLOR = "vertexColor";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT")]
-		[NativeName(NativeNameType.Value, "\"vertexTangent\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_TANGENT = "vertexTangent";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2")]
-		[NativeName(NativeNameType.Value, "\"vertexTexCoord2\"")]
-		public const string RL_DEFAULT_SHADER_ATTRIB_NAME_TEXCOORD2 = "vertexTexCoord2";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_MVP")]
-		[NativeName(NativeNameType.Value, "\"mvp\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_MVP = "mvp";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW")]
-		[NativeName(NativeNameType.Value, "\"matView\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_VIEW = "matView";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION")]
-		[NativeName(NativeNameType.Value, "\"matProjection\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_PROJECTION = "matProjection";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL")]
-		[NativeName(NativeNameType.Value, "\"matModel\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_MODEL = "matModel";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL")]
-		[NativeName(NativeNameType.Value, "\"matNormal\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_NORMAL = "matNormal";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR")]
-		[NativeName(NativeNameType.Value, "\"colDiffuse\"")]
-		public const string RL_DEFAULT_SHADER_UNIFORM_NAME_COLOR = "colDiffuse";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0")]
-		[NativeName(NativeNameType.Value, "\"texture0\"")]
-		public const string RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE0 = "texture0";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1")]
-		[NativeName(NativeNameType.Value, "\"texture1\"")]
-		public const string RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE1 = "texture1";
-
-		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2")]
-		[NativeName(NativeNameType.Value, "\"texture2\"")]
-		public const string RL_DEFAULT_SHADER_SAMPLER2D_NAME_TEXTURE2 = "texture2";
+		[NativeName(NativeNameType.Const, "RLGL_SHOW_GL_DETAILS_INFO")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int RLGL_SHOW_GL_DETAILS_INFO = 0;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_QUADS_DRAW_MODE")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_QUADS_DRAW_MODE = 1;
 
-		[NativeName(NativeNameType.Const, "SPLINE_SEGMENT_DIVISIONS")]
-		[NativeName(NativeNameType.Value, "24")]
-		public const int SPLINE_SEGMENT_DIVISIONS = 24;
-
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PNG")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_PNG = 1;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_BMP")]
+		[NativeName(NativeNameType.Value, "1")]
+		public const int SUPPORT_FILEFORMAT_BMP = 1;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_TGA")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_TGA = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_JPG")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_JPG = 0;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_GIF")]
 		[NativeName(NativeNameType.Value, "1")]
@@ -279,9 +127,41 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_QOI = 1;
 
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PSD")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_PSD = 0;
+
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_DDS")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_DDS = 1;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_HDR")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_HDR = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PIC")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_PIC = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PNM")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_PNM = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_KTX")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_KTX = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_ASTC")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_ASTC = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PKM")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_PKM = 0;
+
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_PVR")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_PVR = 0;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_IMAGE_EXPORT")]
 		[NativeName(NativeNameType.Value, "1")]
@@ -291,14 +171,6 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_IMAGE_GENERATION = 1;
 
-		[NativeName(NativeNameType.Const, "SUPPORT_IMAGE_MANIPULATION")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_IMAGE_MANIPULATION = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_DEFAULT_FONT")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_DEFAULT_FONT = 1;
-
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_TTF")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_TTF = 1;
@@ -307,21 +179,9 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_FNT = 1;
 
-		[NativeName(NativeNameType.Const, "SUPPORT_TEXT_MANIPULATION")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_TEXT_MANIPULATION = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_FONT_ATLAS_WHITE_REC")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_FONT_ATLAS_WHITE_REC = 1;
-
-		[NativeName(NativeNameType.Const, "MAX_TEXT_BUFFER_LENGTH")]
-		[NativeName(NativeNameType.Value, "1024")]
-		public const int MAX_TEXT_BUFFER_LENGTH = 1024;
-
-		[NativeName(NativeNameType.Const, "MAX_TEXTSPLIT_COUNT")]
-		[NativeName(NativeNameType.Value, "128")]
-		public const int MAX_TEXTSPLIT_COUNT = 128;
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_BDF")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_BDF = 0;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_OBJ")]
 		[NativeName(NativeNameType.Value, "1")]
@@ -351,13 +211,9 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_MESH_GENERATION = 1;
 
-		[NativeName(NativeNameType.Const, "MAX_MATERIAL_MAPS")]
-		[NativeName(NativeNameType.Value, "12")]
-		public const int MAX_MATERIAL_MAPS = 12;
-
-		[NativeName(NativeNameType.Const, "MAX_MESH_VERTEX_BUFFERS")]
-		[NativeName(NativeNameType.Value, "9")]
-		public const int MAX_MESH_VERTEX_BUFFERS = 9;
+		[NativeName(NativeNameType.Const, "SUPPORT_GPU_SKINNING")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_GPU_SKINNING = 0;
 
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_WAV")]
 		[NativeName(NativeNameType.Value, "1")]
@@ -375,6 +231,10 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_QOA = 1;
 
+		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_FLAC")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int SUPPORT_FILEFORMAT_FLAC = 0;
+
 		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_XM")]
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_XM = 1;
@@ -383,57 +243,21 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "1")]
 		public const int SUPPORT_FILEFORMAT_MOD = 1;
 
-		[NativeName(NativeNameType.Const, "AUDIO_DEVICE_CHANNELS")]
-		[NativeName(NativeNameType.Value, "2")]
-		public const int AUDIO_DEVICE_CHANNELS = 2;
-
-		[NativeName(NativeNameType.Const, "AUDIO_DEVICE_SAMPLE_RATE")]
-		[NativeName(NativeNameType.Value, "0")]
-		public const int AUDIO_DEVICE_SAMPLE_RATE = 0;
-
-		[NativeName(NativeNameType.Const, "MAX_AUDIO_BUFFER_POOL_CHANNELS")]
-		[NativeName(NativeNameType.Value, "16")]
-		public const int MAX_AUDIO_BUFFER_POOL_CHANNELS = 16;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_STANDARD_FILEIO")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_STANDARD_FILEIO = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_TRACELOG")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_TRACELOG = 1;
-
-		[NativeName(NativeNameType.Const, "MAX_TRACELOG_MSG_LENGTH")]
-		[NativeName(NativeNameType.Value, "256")]
-		public const int MAX_TRACELOG_MSG_LENGTH = 256;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_CLIPBOARD_IMAGE")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_CLIPBOARD_IMAGE = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_BMP")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_FILEFORMAT_BMP = 1;
-
-		[NativeName(NativeNameType.Const, "SUPPORT_FILEFORMAT_JPG")]
-		[NativeName(NativeNameType.Value, "1")]
-		public const int SUPPORT_FILEFORMAT_JPG = 1;
-
 		[NativeName(NativeNameType.Const, "RAYLIB_VERSION_MAJOR")]
-		[NativeName(NativeNameType.Value, "5")]
-		public const int RAYLIB_VERSION_MAJOR = 5;
+		[NativeName(NativeNameType.Value, "6")]
+		public const int RAYLIB_VERSION_MAJOR = 6;
 
 		[NativeName(NativeNameType.Const, "RAYLIB_VERSION_MINOR")]
-		[NativeName(NativeNameType.Value, "5")]
-		public const int RAYLIB_VERSION_MINOR = 5;
+		[NativeName(NativeNameType.Value, "0")]
+		public const int RAYLIB_VERSION_MINOR = 0;
 
 		[NativeName(NativeNameType.Const, "RAYLIB_VERSION_PATCH")]
 		[NativeName(NativeNameType.Value, "0")]
 		public const int RAYLIB_VERSION_PATCH = 0;
 
 		[NativeName(NativeNameType.Const, "RAYLIB_VERSION")]
-		[NativeName(NativeNameType.Value, "\"5.5\"")]
-		public const string RAYLIB_VERSION = "5.5";
+		[NativeName(NativeNameType.Value, "\"6.0\"")]
+		public const string RAYLIB_VERSION = "6.0";
 
 		[NativeName(NativeNameType.Const, "PI")]
 		[NativeName(NativeNameType.Value, "3.14159265358979323846f")]
@@ -443,13 +267,45 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Value, "0.000001f")]
 		public const float EPSILON = 0.000001f;
 
+		[NativeName(NativeNameType.Const, "MAX_TOUCH_POINTS")]
+		[NativeName(NativeNameType.Value, "8")]
+		public const int MAX_TOUCH_POINTS = 8;
+
 		[NativeName(NativeNameType.Const, "RLGL_VERSION")]
-		[NativeName(NativeNameType.Value, "\"5.0\"")]
-		public const string RLGL_VERSION = "5.0";
+		[NativeName(NativeNameType.Value, "\"6.0\"")]
+		public const string RLGL_VERSION = "6.0";
 
 		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_BUFFER_ELEMENTS")]
 		[NativeName(NativeNameType.Value, "8192")]
 		public const int RL_DEFAULT_BATCH_BUFFER_ELEMENTS = 8192;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_BUFFERS")]
+		[NativeName(NativeNameType.Value, "1")]
+		public const int RL_DEFAULT_BATCH_BUFFERS = 1;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_DRAWCALLS")]
+		[NativeName(NativeNameType.Value, "256")]
+		public const int RL_DEFAULT_BATCH_DRAWCALLS = 256;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS")]
+		[NativeName(NativeNameType.Value, "4")]
+		public const int RL_DEFAULT_BATCH_MAX_TEXTURE_UNITS = 4;
+
+		[NativeName(NativeNameType.Const, "RL_MAX_MATRIX_STACK_SIZE")]
+		[NativeName(NativeNameType.Value, "32")]
+		public const int RL_MAX_MATRIX_STACK_SIZE = 32;
+
+		[NativeName(NativeNameType.Const, "RL_MAX_SHADER_LOCATIONS")]
+		[NativeName(NativeNameType.Value, "32")]
+		public const int RL_MAX_SHADER_LOCATIONS = 32;
+
+		[NativeName(NativeNameType.Const, "RL_CULL_DISTANCE_NEAR")]
+		[NativeName(NativeNameType.Value, "0.05")]
+		public const double RL_CULL_DISTANCE_NEAR = 0.05;
+
+		[NativeName(NativeNameType.Const, "RL_CULL_DISTANCE_FAR")]
+		[NativeName(NativeNameType.Value, "4000.0")]
+		public const double RL_CULL_DISTANCE_FAR = 4000.0;
 
 		[NativeName(NativeNameType.Const, "RL_TEXTURE_WRAP_S")]
 		[NativeName(NativeNameType.Value, "0x2802")]
@@ -714,6 +570,46 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Const, "RL_DRAW_FRAMEBUFFER")]
 		[NativeName(NativeNameType.Value, "0x8CA9")]
 		public const int RL_DRAW_FRAMEBUFFER = 0x8CA9;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION")]
+		[NativeName(NativeNameType.Value, "0")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_POSITION = 0;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD")]
+		[NativeName(NativeNameType.Value, "1")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD = 1;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL")]
+		[NativeName(NativeNameType.Value, "2")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_NORMAL = 2;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR")]
+		[NativeName(NativeNameType.Value, "3")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_COLOR = 3;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT")]
+		[NativeName(NativeNameType.Value, "4")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TANGENT = 4;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2")]
+		[NativeName(NativeNameType.Value, "5")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_TEXCOORD2 = 5;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES")]
+		[NativeName(NativeNameType.Value, "6")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INDICES = 6;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES")]
+		[NativeName(NativeNameType.Value, "7")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEINDICES = 7;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS")]
+		[NativeName(NativeNameType.Value, "8")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_BONEWEIGHTS = 8;
+
+		[NativeName(NativeNameType.Const, "RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCETRANSFORM")]
+		[NativeName(NativeNameType.Value, "9")]
+		public const int RL_DEFAULT_SHADER_ATTRIB_LOCATION_INSTANCETRANSFORM = 9;
 
 	}
 }

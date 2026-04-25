@@ -24,13 +24,6 @@ namespace Hexa.NET.Raylib
 	public partial struct FilePathList
 	{
 		/// <summary>
-		/// Filepaths max entries<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "capacity")]
-		[NativeName(NativeNameType.Type, "unsigned int")]
-		public uint Capacity;
-
-		/// <summary>
 		/// Filepaths entries count<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "count")]
@@ -45,9 +38,8 @@ namespace Hexa.NET.Raylib
 		public unsafe byte** Paths;
 
 
-		public unsafe FilePathList(uint capacity = default, uint count = default, byte** paths = default)
+		public unsafe FilePathList(uint count = default, byte** paths = default)
 		{
-			Capacity = capacity;
 			Count = count;
 			Paths = paths;
 		}

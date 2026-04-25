@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Shader location point type<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlShaderLocationIndex")]
-	[Flags]
 	public enum RlShaderLocationIndex : int
 	{
 		/// <summary>

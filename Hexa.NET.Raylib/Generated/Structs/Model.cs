@@ -66,28 +66,28 @@ namespace Hexa.NET.Raylib
 		public unsafe int* MeshMaterial;
 
 		/// <summary>
-		/// Number of bones<br/>
+		/// Skeleton for animation<br/>
 		/// </summary>
-		[NativeName(NativeNameType.Field, "boneCount")]
-		[NativeName(NativeNameType.Type, "int")]
-		public int BoneCount;
+		[NativeName(NativeNameType.Field, "skeleton")]
+		[NativeName(NativeNameType.Type, "ModelSkeleton")]
+		public ModelSkeleton Skeleton;
 
 		/// <summary>
-		/// Bones information (skeleton)<br/>
+		/// Current animation pose (Transform[])<br/>
 		/// </summary>
-		[NativeName(NativeNameType.Field, "bones")]
-		[NativeName(NativeNameType.Type, "BoneInfo *")]
-		public unsafe BoneInfo* Bones;
+		[NativeName(NativeNameType.Field, "currentPose")]
+		[NativeName(NativeNameType.Type, "ModelAnimPose")]
+		public unsafe Transform* CurrentPose;
 
 		/// <summary>
-		/// Bones base transformation (pose)<br/>
+		/// Bones animated transformation matrices<br/>
 		/// </summary>
-		[NativeName(NativeNameType.Field, "bindPose")]
-		[NativeName(NativeNameType.Type, "Transform *")]
-		public unsafe Transform* BindPose;
+		[NativeName(NativeNameType.Field, "boneMatrices")]
+		[NativeName(NativeNameType.Type, "Matrix *")]
+		public unsafe Matrix4x4* BoneMatrices;
 
 
-		public unsafe Model(Matrix4x4 transform = default, int meshCount = default, int materialCount = default, Mesh* meshes = default, Material* materials = default, int* meshMaterial = default, int boneCount = default, BoneInfo* bones = default, Transform* bindPose = default)
+		public unsafe Model(Matrix4x4 transform = default, int meshCount = default, int materialCount = default, Mesh* meshes = default, Material* materials = default, int* meshMaterial = default, ModelSkeleton skeleton = default, Transform* currentPose = default, Matrix4x4* boneMatrices = default)
 		{
 			Transform = transform;
 			MeshCount = meshCount;
@@ -95,9 +95,9 @@ namespace Hexa.NET.Raylib
 			Meshes = meshes;
 			Materials = materials;
 			MeshMaterial = meshMaterial;
-			BoneCount = boneCount;
-			Bones = bones;
-			BindPose = bindPose;
+			Skeleton = skeleton;
+			CurrentPose = currentPose;
+			BoneMatrices = boneMatrices;
 		}
 
 

@@ -75,12 +75,12 @@ namespace Hexa.NET.Raylib
 	#if NET5_0_OR_GREATER
 	[NativeName(NativeNameType.Delegate, "SaveFileTextCallback")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public unsafe delegate byte SaveFileTextCallback([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName, [NativeName(NativeNameType.Param, "text")] [NativeName(NativeNameType.Type, "char *")] byte* text);
+	public unsafe delegate byte SaveFileTextCallback([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] byte* fileName, [NativeName(NativeNameType.Param, "text")] [NativeName(NativeNameType.Type, "char const *")] byte* text);
 
 	#else
 	[NativeName(NativeNameType.Delegate, "SaveFileTextCallback")]
 	[UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-	public unsafe delegate byte SaveFileTextCallback([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] nint fileName, [NativeName(NativeNameType.Param, "text")] [NativeName(NativeNameType.Type, "char *")] nint text);
+	public unsafe delegate byte SaveFileTextCallback([NativeName(NativeNameType.Param, "fileName")] [NativeName(NativeNameType.Type, "char const *")] nint fileName, [NativeName(NativeNameType.Param, "text")] [NativeName(NativeNameType.Type, "char const *")] nint text);
 
 	#endif
 

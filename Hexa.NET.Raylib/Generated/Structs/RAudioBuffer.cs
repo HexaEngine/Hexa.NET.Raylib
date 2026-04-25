@@ -16,10 +16,6 @@ using System.Numerics;
 
 namespace Hexa.NET.Raylib
 {
-	/// <summary>
-	/// Opaque structs declaration<br/>
-	/// NOTE: Actual structs are defined internally in raudio module<br/>
-	/// </summary>
 	[NativeName(NativeNameType.StructOrClass, "rAudioBuffer")]
 	[StructLayout(LayoutKind.Sequential)]
 	public partial struct RAudioBuffer

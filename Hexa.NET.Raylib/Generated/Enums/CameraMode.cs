@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Camera system modes<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "CameraMode")]
-	[Flags]
 	public enum CameraMode : int
 	{
 		/// <summary>

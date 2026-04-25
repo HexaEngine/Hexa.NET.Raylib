@@ -35,7 +35,7 @@ namespace Hexa.NET.Raylib
 		/// </summary>
 		[NativeName(NativeNameType.Field, "rotation")]
 		[NativeName(NativeNameType.Type, "Quaternion")]
-		public Quaternion Rotation;
+		public Vector4 Rotation;
 
 		/// <summary>
 		/// Scale<br/>
@@ -45,7 +45,7 @@ namespace Hexa.NET.Raylib
 		public Vector3 Scale;
 
 
-		public unsafe Transform(Vector3 translation = default, Quaternion rotation = default, Vector3 scale = default)
+		public unsafe Transform(Vector3 translation = default, Vector4 rotation = default, Vector3 scale = default)
 		{
 			Translation = translation;
 			Rotation = rotation;

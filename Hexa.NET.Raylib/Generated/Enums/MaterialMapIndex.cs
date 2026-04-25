@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Material map index<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "MaterialMapIndex")]
-	[Flags]
 	public enum MaterialMapIndex : int
 	{
 		/// <summary>

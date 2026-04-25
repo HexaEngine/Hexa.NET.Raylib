@@ -18,7 +18,6 @@ namespace Hexa.NET.Raylib
 	/// NOTE: By default up to 8 color channels defined, but it can be more<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlFramebufferAttachType")]
-	[Flags]
 	public enum RlFramebufferAttachType : int
 	{
 		/// <summary>

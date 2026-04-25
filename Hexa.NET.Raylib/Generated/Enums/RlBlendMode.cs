@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Color blending modes (pre-defined)<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlBlendMode")]
-	[Flags]
 	public enum RlBlendMode : int
 	{
 		/// <summary>

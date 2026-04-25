@@ -24,28 +24,28 @@ namespace Hexa.NET.Raylib
 	public partial struct Camera2D
 	{
 		/// <summary>
-		/// Camera offset (displacement from target)<br/>
+		/// Camera offset (screen space offset from window origin)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "offset")]
 		[NativeName(NativeNameType.Type, "Vector2")]
 		public Vector2 Offset;
 
 		/// <summary>
-		/// Camera target (rotation and zoom origin)<br/>
+		/// Camera target (world space target point that is mapped to screen space offset)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "target")]
 		[NativeName(NativeNameType.Type, "Vector2")]
 		public Vector2 Target;
 
 		/// <summary>
-		/// Camera rotation in degrees<br/>
+		/// Camera rotation in degrees (pivots around target)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "rotation")]
 		[NativeName(NativeNameType.Type, "float")]
 		public float Rotation;
 
 		/// <summary>
-		/// Camera zoom (scaling), should be 1.0f by default<br/>
+		/// Camera zoom (scaling around target), must not be set to 0, set to 1.0f for no scale<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "zoom")]
 		[NativeName(NativeNameType.Type, "float")]

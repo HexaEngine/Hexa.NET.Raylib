@@ -17,7 +17,6 @@ namespace Hexa.NET.Raylib
 	/// Shader attribute data types<br/>
 	/// </summary>
 	[NativeName(NativeNameType.Enum, "rlShaderAttributeDataType")]
-	[Flags]
 	public enum RlShaderAttributeDataType : int
 	{
 		/// <summary>

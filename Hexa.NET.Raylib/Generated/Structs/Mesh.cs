@@ -87,6 +87,27 @@ namespace Hexa.NET.Raylib
 		public unsafe ushort* Indices;
 
 		/// <summary>
+		/// Number of bones (MAX: 256 bones)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "boneCount")]
+		[NativeName(NativeNameType.Type, "int")]
+		public int BoneCount;
+
+		/// <summary>
+		/// Vertex bone indices, up to 4 bones influence by vertex (skinning) (shader-location = 6)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "boneIndices")]
+		[NativeName(NativeNameType.Type, "unsigned char *")]
+		public unsafe byte* BoneIndices;
+
+		/// <summary>
+		/// Vertex bone weight, up to 4 bones influence by vertex (skinning) (shader-location = 7)<br/>
+		/// </summary>
+		[NativeName(NativeNameType.Field, "boneWeights")]
+		[NativeName(NativeNameType.Type, "float *")]
+		public unsafe float* BoneWeights;
+
+		/// <summary>
 		/// Animated vertex positions (after bones transformations)<br/>
 		/// </summary>
 		[NativeName(NativeNameType.Field, "animVertices")]
@@ -99,34 +120,6 @@ namespace Hexa.NET.Raylib
 		[NativeName(NativeNameType.Field, "animNormals")]
 		[NativeName(NativeNameType.Type, "float *")]
 		public unsafe float* AnimNormals;
-
-		/// <summary>
-		/// Vertex bone ids, max 255 bone ids, up to 4 bones influence by vertex (skinning) (shader-location = 6)<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "boneIds")]
-		[NativeName(NativeNameType.Type, "unsigned char *")]
-		public unsafe byte* BoneIds;
-
-		/// <summary>
-		/// Vertex bone weight, up to 4 bones influence by vertex (skinning) (shader-location = 7)<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "boneWeights")]
-		[NativeName(NativeNameType.Type, "float *")]
-		public unsafe float* BoneWeights;
-
-		/// <summary>
-		/// Bones animated transformation matrices<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "boneMatrices")]
-		[NativeName(NativeNameType.Type, "Matrix *")]
-		public unsafe Matrix4x4* BoneMatrices;
-
-		/// <summary>
-		/// Number of bones<br/>
-		/// </summary>
-		[NativeName(NativeNameType.Field, "boneCount")]
-		[NativeName(NativeNameType.Type, "int")]
-		public int BoneCount;
 
 		/// <summary>
 		/// OpenGL Vertex Array Object id<br/>
@@ -143,7 +136,7 @@ namespace Hexa.NET.Raylib
 		public unsafe uint* VboId;
 
 
-		public unsafe Mesh(int vertexCount = default, int triangleCount = default, float* vertices = default, float* texcoords = default, float* texcoords2 = default, float* normals = default, float* tangents = default, byte* colors = default, ushort* indices = default, float* animVertices = default, float* animNormals = default, byte* boneIds = default, float* boneWeights = default, Matrix4x4* boneMatrices = default, int boneCount = default, uint vaoId = default, uint* vboId = default)
+		public unsafe Mesh(int vertexCount = default, int triangleCount = default, float* vertices = default, float* texcoords = default, float* texcoords2 = default, float* normals = default, float* tangents = default, byte* colors = default, ushort* indices = default, int boneCount = default, byte* boneIndices = default, float* boneWeights = default, float* animVertices = default, float* animNormals = default, uint vaoId = default, uint* vboId = default)
 		{
 			VertexCount = vertexCount;
 			TriangleCount = triangleCount;
@@ -154,12 +147,11 @@ namespace Hexa.NET.Raylib
 			Tangents = tangents;
 			Colors = colors;
 			Indices = indices;
+			BoneCount = boneCount;
+			BoneIndices = boneIndices;
+			BoneWeights = boneWeights;
 			AnimVertices = animVertices;
 			AnimNormals = animNormals;
-			BoneIds = boneIds;
-			BoneWeights = boneWeights;
-			BoneMatrices = boneMatrices;
-			BoneCount = boneCount;
 			VaoId = vaoId;
 			VboId = vboId;
 		}

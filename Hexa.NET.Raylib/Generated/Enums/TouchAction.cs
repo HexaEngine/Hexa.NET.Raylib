@@ -14,7 +14,6 @@ using System.Numerics;
 namespace Hexa.NET.Raylib
 {
 	[NativeName(NativeNameType.Enum, "TouchAction")]
-	[Flags]
 	public enum TouchAction : int
 	{
 		[NativeName(NativeNameType.EnumItem, "TOUCH_ACTION_UP")]
