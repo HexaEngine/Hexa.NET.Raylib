@@ -33,7 +33,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="HexaGen.Runtime" Version="1.1.16" />
+		<PackageReference Include="HexaGen.Runtime" Version="1.1.24" />
 	</ItemGroup>
 
 	<ItemGroup>
