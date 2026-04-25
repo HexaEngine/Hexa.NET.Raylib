@@ -11,7 +11,7 @@ jobs:
       repo-tag: "6.0"
       cmake-flags: "-DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DBUILD_EXAMPLES=OFF"
       cmake-flags-windows: "-DCMAKE_SYSTEM_VERSION=10.0.26100.0"
-      cmake-flags-android: "-DPLATFORM=Android -DCMAKE_SHARED_LINKER_FLAGS=-Wl,--allow-undefined"
+      cmake-flags-android: "-DPLATFORM=Android -DCMAKE_SHARED_LINKER_FLAGS=-Wl,--unresolved-symbols=ignore-all"
       linux-deps: "build-essential cmake libasound2-dev libx11-dev libxrandr-dev libxi-dev libgl1-mesa-dev libglu1-mesa-dev libxcursor-dev libxinerama-dev libwayland-dev libxkbcommon-dev"
       ndk-version: "26.3.11579264"
       bin-name-osx: "raylib/libraylib.dylib"
